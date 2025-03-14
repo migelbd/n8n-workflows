@@ -1,0 +1,79 @@
+{
+  "id": "QnaTSwf1OQUs1eG4",
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "36def365-c516-434e-ae84-2ec8c16e876c",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"name\": \"value\",\n  \"phone\": \"+37379105548\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        0
+      ],
+      "id": "3612e664-66d3-4153-a272-0a06689bf989",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "defaultCountry": "RU",
+        "phonenumber": "={{ $json.phone }}"
+      },
+      "type": "@splainez/n8n-nodes-phonenumber-parser.phoneNumberParser",
+      "typeVersion": 1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "409f9588-121e-443d-b2fd-25434c514d36",
+      "name": "Phone Number Parser"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Phone Number Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "abaac46c-9460-4a81-b3df-81ef6db816b9",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}
