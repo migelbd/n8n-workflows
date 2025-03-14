@@ -1,0 +1,59 @@
+{
+  "id": "AqsjOxvkl810I9az",
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "ewfwefwef",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "05d39067-3ae3-4889-aeaf-73f20af8ece3",
+      "name": "Webhook",
+      "webhookId": "571ec019-ba31-4b54-b4f2-6bd856481034"
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {
+          "fileName": "my_file.json"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "b7f787f3-b9f1-40cb-8b12-2a101a6346aa",
+      "name": "Convert to File"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "004bb7f5-ead4-4034-85d0-ff9077e53e13",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}
