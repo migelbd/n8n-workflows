@@ -1,0 +1,12 @@
+{
+  "id": "LTSyby2YDUSqRo20",
+  "name": "Telegram account",
+  "type": "telegramApi",
+  "data": {
+    "accessToken": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}
