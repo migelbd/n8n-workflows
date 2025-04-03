@@ -1,0 +1,1121 @@
+{
+  "id": "LAZl2rx8ttTbiD6Y",
+  "name": "ТравмБот copy",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "527a4ca3-8d25-4b73-aa11-d112a576cfe2",
+              "leftValue": "={{ $json.data['Возраст ребенка?'] }}",
+              "rightValue": "6-11 лет",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "af187b2c-eb70-4535-8054-6ddcdba0689f",
+              "leftValue": "={{ $json.data['Возраст ребенка?'] }}",
+              "rightValue": "Старше 12 лет",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1000,
+        -440
+      ],
+      "id": "fbd59869-36c3-4499-802f-e11bbc108c9b",
+      "name": "23"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e54d4d3b-afb8-4b46-bde5-210680b59650",
+              "leftValue": "={{ $json.message.text }}",
+              "rightValue": "/start",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -40,
+        100
+      ],
+      "id": "08abe02f-80c6-48fa-ba04-651e2ca926eb",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "={{ $json.message.from.id }}",
+        "file": "https://sun9-72.userapi.com/impg/swZIvnTCQ3vf72au3TgkdZQVwx0-icRdnnQMJg/NXTcYsIGUyk.jpg?size=1704x1564&quality=95&sign=4655eb73bd364348f4f7d4798ae78b24&type=album",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "Я получил травму",
+                    "additionalFields": {
+                      "callback_data": "havtravma"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "caption": "<strong>Добро пожаловать в бот Травме.НЕТ</strong>\nДанный бот разработан на кафедре стоматологии детского возраста и ортодонтии СГМУ им. В.И. Разумовского. Данный бот не является заменой консультации врача и носит информационный характер",
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        260,
+        60
+      ],
+      "id": "d05e1198-176e-4ea8-8241-01e4e389792b",
+      "name": "Telegram",
+      "webhookId": "1decf89f-a71e-48cf-be18-cdaade2d6219",
+      "credentials": {
+        "telegramApi": {
+          "id": "4wwqPAE1h8JpgkI6",
+          "name": "TravmeNET_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message",
+          "callback_query"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -800,
+        -200
+      ],
+      "id": "9d57af11-22dc-4d86-9bf2-8434fb2d03ca",
+      "name": "Сообщение",
+      "webhookId": "269e2fc4-c219-4715-982d-744245afee83",
+      "credentials": {
+        "telegramApi": {
+          "id": "4wwqPAE1h8JpgkI6",
+          "name": "TravmeNET_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.callback_query }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "object",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "5f8f8261-4c30-4bfd-b180-a4ed46b78a42"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Нажатие кнопки"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "cdb6818a-c731-45b9-b2f7-26ba718119df",
+                    "leftValue": "={{ $json.message }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "object",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Сообщение"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -360,
+        -180
+      ],
+      "id": "aad06fa7-802b-4021-8f33-33d07933a6f8",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.callback_query.data }}",
+                    "rightValue": "havtravma",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "df2a23ad-ce37-419a-819a-af7520417ed4"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        140,
+        -260
+      ],
+      "id": "a35819a2-0e61-4275-bae6-e1437f71f0e1",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "={{ $json.callback_query.message.chat.id }}",
+        "message": "Необходимо заполнить форму",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Возраст ребенка?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "До 5 лет "
+                  },
+                  {
+                    "option": "6-11 лет"
+                  },
+                  {
+                    "option": "Старше 12 лет "
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Какая травма зуба?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Зуб скололся"
+                  },
+                  {
+                    "option": "Зуб подвижный"
+                  },
+                  {
+                    "option": "Зуб выбит (постоянный)"
+                  },
+                  {
+                    "option": "Зуб выбит (молочный)"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Есть ли боль?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Да"
+                  },
+                  {
+                    "option": "Нет"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Сколько времени прошло после травмы?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "До 30 минут"
+                  },
+                  {
+                    "option": "Больше 30 минут"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "messageButtonLabel": "Открыть форму",
+          "responseFormTitle": "Заполните анкету",
+          "responseFormButtonLabel": "Отправить",
+          "limitWaitTime": {
+            "values": {
+              "resumeAmount": 30,
+              "resumeUnit": "minutes"
+            }
+          },
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        380,
+        -300
+      ],
+      "id": "4b22ced9-9c75-4946-b50d-4677d4182b35",
+      "name": "Telegram1",
+      "webhookId": "962280eb-d465-48cb-afac-d8cde8d99a36",
+      "credentials": {
+        "telegramApi": {
+          "id": "4wwqPAE1h8JpgkI6",
+          "name": "TravmeNET_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7c9b46ef-5711-459a-a6dd-d9f75c6e0a69",
+              "leftValue": "={{ $json.data['Есть ли боль?'] }}",
+              "rightValue": "Да",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        520,
+        40
+      ],
+      "id": "731ff98f-853d-482b-82d3-335c46ec9c36",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Switch').item.json.callback_query.message.chat.id }}",
+        "text": "Дайте «Нурофен» в соответствии с возрастом для снятия боли",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        780,
+        160
+      ],
+      "id": "28f5aa34-f840-40d2-a935-d540b6950faa",
+      "name": "Telegram2",
+      "webhookId": "fb370fb5-7353-4b60-a3d6-22163e9905f9",
+      "credentials": {
+        "telegramApi": {
+          "id": "4wwqPAE1h8JpgkI6",
+          "name": "TravmeNET_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Switch').item.json.callback_query.message.chat.id }}",
+        "text": "- Найдите зуб, держите его за коронку\n- Если зуб грязный, ополосните его водой/физраствором/слюной. Не касайтесь корня.\n- Верните зуб в лунку только в том случае, если вы уверены, что сможете поставить зуб правильно. Ориентируйтесь на соседний зуб, чтобы вставить зуб ровно.\n- Попросите ребенка накусить салфетку/платок.\n- Срочно обратитесь к стоматологу.\n",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1820,
+        -460
+      ],
+      "id": "120750db-82a6-4ebd-92dc-4fffc5b9f16e",
+      "name": "Telegram3",
+      "webhookId": "1d146467-5bc5-4235-9a6e-196ad03d60ed",
+      "credentials": {
+        "telegramApi": {
+          "id": "4wwqPAE1h8JpgkI6",
+          "name": "TravmeNET_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Switch').item.json.callback_query.message.chat.id }}",
+        "text": "- Найдите зуб, держите его за коронку\n- Если зуб грязный, ополосните его водой/физраствором/слюной. Не касайтесь корня.\n- Положите зуб в контейнер с физраствором или молоком \n- Не кладите зуб в спирт или перекись водорода!\n- Срочно обратитесь к стоматологу.\n",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1820,
+        -220
+      ],
+      "id": "87aaecde-e5a2-49d7-ab7f-cf919f791038",
+      "name": "Telegram4",
+      "webhookId": "1d146467-5bc5-4235-9a6e-196ad03d60ed",
+      "credentials": {
+        "telegramApi": {
+          "id": "4wwqPAE1h8JpgkI6",
+          "name": "TravmeNET_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b675c491-d287-4f6b-ad33-466c72bf861b",
+              "leftValue": "={{ $json.data['Какая травма зуба?'] }}",
+              "rightValue": "Зуб выбит (постоянный)",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "1a627da4-4349-49ad-8196-026d84023e16",
+              "leftValue": "={{ $('Telegram1').item.json.data['Сколько времени прошло после травмы?'] }}",
+              "rightValue": "Больше 30 минут",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1360,
+        -200
+      ],
+      "id": "d71a3cc3-1177-44d3-acb9-20b4151a31d2",
+      "name": "2,3,6,10"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b8aa950c-51d9-4778-9e8f-0eb7f9d57ebd",
+              "leftValue": "={{ $json.data['Какая травма зуба?'] }}",
+              "rightValue": "Зуб выбит (постоянный)",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "436527f6-0f40-4b3b-9327-4cdbe3b38e1d",
+              "leftValue": "={{ $json.data['Сколько времени прошло после травмы?'] }}",
+              "rightValue": "До 30 минут",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1360,
+        -440
+      ],
+      "id": "8dba32bc-0a28-4a2e-896a-b0c03024df41",
+      "name": "2, 3, 6, 9"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "456159aa-d8f6-4e7b-a246-d73bc76db056",
+              "leftValue": "={{ $json.data['Какая травма зуба?'] }}",
+              "rightValue": "зуб выбит (молочный)",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1360,
+        -20
+      ],
+      "id": "4a22674a-84e2-4101-82b0-9842a8abc0da",
+      "name": "1,2,6"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Switch').item.json.callback_query.message.chat.id }}",
+        "text": "- Не вставляйте зуб обратно в лунку – можно повредить зачаток постоянного зуба. \n- Промойте рот ребенка водой и приложите наружно на кожу в области травму холод на 20 минут.\n- Обратитесь к стоматологу в ближайшие часы.\n",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1820,
+        -40
+      ],
+      "id": "f3a69bd9-cbe5-4c11-9f3a-a725919bb6de",
+      "name": "Telegram5",
+      "webhookId": "1d146467-5bc5-4235-9a6e-196ad03d60ed",
+      "credentials": {
+        "telegramApi": {
+          "id": "4wwqPAE1h8JpgkI6",
+          "name": "TravmeNET_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Switch').item.json.callback_query.message.chat.id }}",
+        "text": "- Убедитесь, что ребенок в порядке, у него нет сотрясений или других жизнеугрожающих травм.\n- Постарайтесь найти фрагмент зуба.\n- Положите кусочек зуба в физраствор/молоко/воду.\n- Не давайте ребенку горячую и холодную пищу.\n- Если ребенок жалуется на боль, дайте «Нурофен» в соответствии с возрастом.\n- Обратитесь к стоматологу в течении 24 часов.\n",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1820,
+        180
+      ],
+      "id": "2e05bf2c-2893-4d00-96d5-f119f6f50a50",
+      "name": "Telegram6",
+      "webhookId": "1d146467-5bc5-4235-9a6e-196ad03d60ed",
+      "credentials": {
+        "telegramApi": {
+          "id": "4wwqPAE1h8JpgkI6",
+          "name": "TravmeNET_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "527a4ca3-8d25-4b73-aa11-d112a576cfe2",
+              "leftValue": "={{ $json.data['Возраст ребенка?'] }}",
+              "rightValue": "До 5 лет",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "af187b2c-eb70-4535-8054-6ddcdba0689f",
+              "leftValue": "={{ $json.data['Возраст ребенка?'] }}",
+              "rightValue": "6-11 лет",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "456159aa-d8f6-4e7b-a246-d73bc76db056",
+              "leftValue": "={{ $json.data['Какая травма зуба?'] }}",
+              "rightValue": "Зуб скололся",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1360,
+        200
+      ],
+      "id": "0de359bb-fd16-4d8a-9ae6-bfd96deea1cc",
+      "name": "1,2,3,4"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Switch').item.json.callback_query.message.chat.id }}",
+        "text": "- Найдите зуб, держите его за коронку\n- Если зуб грязный, ополосните его водой/физраствором/слюной. Не касайтесь корня.\n- Верните зуб в лунку только в том случае, если вы уверены, что сможете поставить зуб правильно. Ориентируйтесь на соседний зуб, чтобы вставить зуб ровно.\n- Попросите ребенка накусить салфетку/платок.\n- Срочно обратитесь к стоматологу.\n",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1820,
+        380
+      ],
+      "id": "14286aff-99d2-49c9-8f2b-e85a454681f8",
+      "name": "Telegram7",
+      "webhookId": "1d146467-5bc5-4235-9a6e-196ad03d60ed",
+      "credentials": {
+        "telegramApi": {
+          "id": "4wwqPAE1h8JpgkI6",
+          "name": "TravmeNET_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b8aa950c-51d9-4778-9e8f-0eb7f9d57ebd",
+              "leftValue": "={{ $json.data['Какая травма зуба?'] }}",
+              "rightValue": "Зуб подвижный",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1360,
+        400
+      ],
+      "id": "f21f2281-9f91-4910-87b9-3328b5f9025c",
+      "name": "1,2,3,5"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "527a4ca3-8d25-4b73-aa11-d112a576cfe2",
+              "leftValue": "={{ $json.data['Возраст ребенка?'] }}",
+              "rightValue": "До 5 лет",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "af187b2c-eb70-4535-8054-6ddcdba0689f",
+              "leftValue": "={{ $json.data['Возраст ребенка?'] }}",
+              "rightValue": "6-11 лет",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1000,
+        -40
+      ],
+      "id": "3897c947-d73e-4404-a5b9-1138beb8acf8",
+      "name": "1-2"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Switch').item.json.callback_query.message.chat.id }}",
+        "text": "Для того чтобы начать сначала /start",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2380,
+        -80
+      ],
+      "id": "5c727378-9e3f-4921-b5c7-9dfa954c09b0",
+      "name": "Telegram8",
+      "webhookId": "1d146467-5bc5-4235-9a6e-196ad03d60ed",
+      "credentials": {
+        "telegramApi": {
+          "id": "4wwqPAE1h8JpgkI6",
+          "name": "TravmeNET_bot"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2220,
+        -40
+      ],
+      "id": "ed52ab98-69df-4f0e-b999-47a22bf2591b",
+      "name": "Wait",
+      "webhookId": "50a3d6a0-7baa-4fbe-a4e6-16300d965884"
+    },
+    {
+      "parameters": {
+        "resource": "callback",
+        "queryId": "={{ $json.callback_query.id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -120,
+        -480
+      ],
+      "id": "f9b4bf63-665d-43a4-a2cc-e9ff545fea70",
+      "name": "Telegram10",
+      "webhookId": "3418e1f5-d481-4206-ae08-7a5358babf2c",
+      "credentials": {
+        "telegramApi": {
+          "id": "4wwqPAE1h8JpgkI6",
+          "name": "TravmeNET_bot"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "23": {
+      "main": [
+        [
+          {
+            "node": "2, 3, 6, 9",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "2,3,6,10",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1,2,3,5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1,2,3,4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Сообщение": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Telegram10",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "23",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1-2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Telegram2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2,3,6,10": {
+      "main": [
+        [
+          {
+            "node": "Telegram4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2, 3, 6, 9": {
+      "main": [
+        [
+          {
+            "node": "Telegram3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1,2,6": {
+      "main": [
+        [
+          {
+            "node": "Telegram5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1,2,3,4": {
+      "main": [
+        [
+          {
+            "node": "Telegram6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1,2,3,5": {
+      "main": [
+        [
+          {
+            "node": "Telegram7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1-2": {
+      "main": [
+        [
+          {
+            "node": "1,2,6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1,2,3,5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram3": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram4": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram5": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram6": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram7": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Telegram8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "fd252866-c864-44e0-8870-23ad10130dea",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "doza4815162342@gmail.com"
+  },
+  "parentFolderId": null
+}

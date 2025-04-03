@@ -1,0 +1,15 @@
+{
+  "id": "pBYPFg5vol6k7Tfa",
+  "name": "MongoDB DevConf",
+  "type": "mongoDb",
+  "data": {
+    "host": "",
+    "database": "",
+    "user": "",
+    "password": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}

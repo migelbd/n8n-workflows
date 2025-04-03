@@ -1,0 +1,92 @@
+{
+  "id": "ssqvLj8TJGuSS0gw",
+  "name": "TravmaFOrm",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message",
+          "callback_query"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "23ee7ca6-d39c-4320-b259-3d3d30aca1f2",
+      "name": "Telegram Trigger",
+      "webhookId": "9ffeb46f-9934-4f55-9eea-eda70c6c04b9",
+      "credentials": {
+        "telegramApi": {
+          "id": "4wwqPAE1h8JpgkI6",
+          "name": "TravmeNET_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "14e14b88-da27-4220-bdba-9f462e34e1e2"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "1635a4b0-479d-46c1-ae8a-e9c3ae4c074a",
+      "name": "Switch"
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "23b37d19-a2f1-492b-8e65-fb2f9a82198d",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "doza4815162342@gmail.com"
+  },
+  "parentFolderId": null
+}

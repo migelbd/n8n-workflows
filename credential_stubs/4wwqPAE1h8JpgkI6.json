@@ -1,12 +1,12 @@
 {
-  "id": "LTSyby2YDUSqRo20",
-  "name": "TestBot",
+  "id": "4wwqPAE1h8JpgkI6",
+  "name": "TravmeNET_bot",
   "type": "telegramApi",
   "data": {
     "accessToken": ""
   },
   "ownedBy": {
     "type": "personal",
-    "personalEmail": "mikhail@devilweb.ru"
+    "personalEmail": "doza4815162342@gmail.com"
   }
 }

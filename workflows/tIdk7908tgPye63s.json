@@ -35,5 +35,6 @@
   "owner": {
     "type": "personal",
     "personalEmail": "eciubarov@gmail.com"
-  }
+  },
+  "parentFolderId": null
 }
