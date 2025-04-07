@@ -1,6 +1,6 @@
 {
-  "id": "LAZl2rx8ttTbiD6Y",
-  "name": "ТравмБот copy",
+  "id": "wQezzWxW0cjIxz6R",
+  "name": "TrvmBot",
   "nodes": [
     {
       "parameters": {
@@ -40,10 +40,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1000,
-        -440
+        1120,
+        40
       ],
-      "id": "fbd59869-36c3-4499-802f-e11bbc108c9b",
+      "id": "dd784947-8118-48a8-a194-848a8a3bc3fd",
       "name": "23"
     },
     {
@@ -74,10 +74,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -40,
-        100
+        80,
+        580
       ],
-      "id": "08abe02f-80c6-48fa-ba04-651e2ca926eb",
+      "id": "37ee475c-ef83-448c-822c-6db6eada5b18",
       "name": "If"
     },
     {
@@ -110,16 +110,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        260,
-        60
+        380,
+        540
       ],
-      "id": "d05e1198-176e-4ea8-8241-01e4e389792b",
+      "id": "9f4daf1e-c7a4-4200-a3b0-4e7b60f04008",
       "name": "Telegram",
       "webhookId": "1decf89f-a71e-48cf-be18-cdaade2d6219",
       "credentials": {
         "telegramApi": {
-          "id": "4wwqPAE1h8JpgkI6",
-          "name": "TravmeNET_bot"
+          "id": "AG5ES0zHiTaIhFiO",
+          "name": "Telegram account"
         }
       }
     },
@@ -134,16 +134,16 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.1,
       "position": [
-        -800,
-        -200
+        -680,
+        280
       ],
-      "id": "9d57af11-22dc-4d86-9bf2-8434fb2d03ca",
+      "id": "689ef2ff-1892-4ea6-95c6-74b14fedffbf",
       "name": "Сообщение",
       "webhookId": "269e2fc4-c219-4715-982d-744245afee83",
       "credentials": {
         "telegramApi": {
-          "id": "4wwqPAE1h8JpgkI6",
-          "name": "TravmeNET_bot"
+          "id": "AG5ES0zHiTaIhFiO",
+          "name": "Telegram account"
         }
       }
     },
@@ -208,10 +208,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -360,
-        -180
+        -240,
+        300
       ],
-      "id": "aad06fa7-802b-4021-8f33-33d07933a6f8",
+      "id": "366ae827-a897-4818-b1de-8c25e60f7e57",
       "name": "Switch1"
     },
     {
@@ -247,10 +247,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        140,
-        -260
+        260,
+        220
       ],
-      "id": "a35819a2-0e61-4275-bae6-e1437f71f0e1",
+      "id": "102f6e1e-a2e9-4d27-a97b-dd15666f5cd6",
       "name": "Switch"
     },
     {
@@ -348,16 +348,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        380,
-        -300
+        500,
+        180
       ],
-      "id": "4b22ced9-9c75-4946-b50d-4677d4182b35",
+      "id": "61a76ee8-9be1-4ed9-8d14-0ad2682e6d48",
       "name": "Telegram1",
       "webhookId": "962280eb-d465-48cb-afac-d8cde8d99a36",
       "credentials": {
         "telegramApi": {
-          "id": "4wwqPAE1h8JpgkI6",
-          "name": "TravmeNET_bot"
+          "id": "AG5ES0zHiTaIhFiO",
+          "name": "Telegram account"
         }
       }
     },
@@ -391,10 +391,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        520,
-        40
+        640,
+        520
       ],
-      "id": "731ff98f-853d-482b-82d3-335c46ec9c36",
+      "id": "c0611d94-6e42-48c1-92ff-b23ff4f830a6",
       "name": "If1"
     },
     {
@@ -408,16 +408,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        780,
-        160
+        900,
+        640
       ],
-      "id": "28f5aa34-f840-40d2-a935-d540b6950faa",
+      "id": "59131c63-9000-4c6d-8572-1604783853e4",
       "name": "Telegram2",
       "webhookId": "fb370fb5-7353-4b60-a3d6-22163e9905f9",
       "credentials": {
         "telegramApi": {
-          "id": "4wwqPAE1h8JpgkI6",
-          "name": "TravmeNET_bot"
+          "id": "AG5ES0zHiTaIhFiO",
+          "name": "Telegram account"
         }
       }
     },
@@ -432,16 +432,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1820,
-        -460
+        1940,
+        20
       ],
-      "id": "120750db-82a6-4ebd-92dc-4fffc5b9f16e",
+      "id": "a1e32aa1-415d-44cf-ac30-d61d44596ffc",
       "name": "Telegram3",
       "webhookId": "1d146467-5bc5-4235-9a6e-196ad03d60ed",
       "credentials": {
         "telegramApi": {
-          "id": "4wwqPAE1h8JpgkI6",
-          "name": "TravmeNET_bot"
+          "id": "AG5ES0zHiTaIhFiO",
+          "name": "Telegram account"
         }
       }
     },
@@ -456,16 +456,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1820,
-        -220
+        1940,
+        260
       ],
-      "id": "87aaecde-e5a2-49d7-ab7f-cf919f791038",
+      "id": "38be4e15-0154-4215-848c-633c0f7574b6",
       "name": "Telegram4",
       "webhookId": "1d146467-5bc5-4235-9a6e-196ad03d60ed",
       "credentials": {
         "telegramApi": {
-          "id": "4wwqPAE1h8JpgkI6",
-          "name": "TravmeNET_bot"
+          "id": "AG5ES0zHiTaIhFiO",
+          "name": "Telegram account"
         }
       }
     },
@@ -507,10 +507,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1360,
-        -200
+        1480,
+        280
       ],
-      "id": "d71a3cc3-1177-44d3-acb9-20b4151a31d2",
+      "id": "5e4ad2fd-3017-49d2-8de3-ca54a44b6133",
       "name": "2,3,6,10"
     },
     {
@@ -551,10 +551,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1360,
-        -440
+        1480,
+        40
       ],
-      "id": "8dba32bc-0a28-4a2e-896a-b0c03024df41",
+      "id": "af392061-8609-4010-a7ae-6631b3fb845e",
       "name": "2, 3, 6, 9"
     },
     {
@@ -586,10 +586,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1360,
-        -20
+        1480,
+        460
       ],
-      "id": "4a22674a-84e2-4101-82b0-9842a8abc0da",
+      "id": "22b07fa9-9a55-43a0-bc4d-e3495701bea9",
       "name": "1,2,6"
     },
     {
@@ -603,16 +603,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1820,
-        -40
+        1940,
+        440
       ],
-      "id": "f3a69bd9-cbe5-4c11-9f3a-a725919bb6de",
+      "id": "337cc200-a421-48b5-930b-5d2790d7207e",
       "name": "Telegram5",
       "webhookId": "1d146467-5bc5-4235-9a6e-196ad03d60ed",
       "credentials": {
         "telegramApi": {
-          "id": "4wwqPAE1h8JpgkI6",
-          "name": "TravmeNET_bot"
+          "id": "AG5ES0zHiTaIhFiO",
+          "name": "Telegram account"
         }
       }
     },
@@ -627,16 +627,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1820,
-        180
+        1940,
+        660
       ],
-      "id": "2e05bf2c-2893-4d00-96d5-f119f6f50a50",
+      "id": "a15bfef6-8a5f-4124-9e06-305d2c7514c9",
       "name": "Telegram6",
       "webhookId": "1d146467-5bc5-4235-9a6e-196ad03d60ed",
       "credentials": {
         "telegramApi": {
-          "id": "4wwqPAE1h8JpgkI6",
-          "name": "TravmeNET_bot"
+          "id": "AG5ES0zHiTaIhFiO",
+          "name": "Telegram account"
         }
       }
     },
@@ -687,10 +687,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1360,
-        200
+        1480,
+        680
       ],
-      "id": "0de359bb-fd16-4d8a-9ae6-bfd96deea1cc",
+      "id": "b0df4f49-f937-40a1-9a88-cb13aab28e86",
       "name": "1,2,3,4"
     },
     {
@@ -704,16 +704,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1820,
-        380
+        1940,
+        860
       ],
-      "id": "14286aff-99d2-49c9-8f2b-e85a454681f8",
+      "id": "35753ca5-4403-4f07-99bc-99e928da0b63",
       "name": "Telegram7",
       "webhookId": "1d146467-5bc5-4235-9a6e-196ad03d60ed",
       "credentials": {
         "telegramApi": {
-          "id": "4wwqPAE1h8JpgkI6",
-          "name": "TravmeNET_bot"
+          "id": "AG5ES0zHiTaIhFiO",
+          "name": "Telegram account"
         }
       }
     },
@@ -746,10 +746,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1360,
-        400
+        1480,
+        880
       ],
-      "id": "f21f2281-9f91-4910-87b9-3328b5f9025c",
+      "id": "95e1e976-5ba2-4cb3-a996-36bfc810561c",
       "name": "1,2,3,5"
     },
     {
@@ -790,10 +790,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1000,
-        -40
+        1120,
+        440
       ],
-      "id": "3897c947-d73e-4404-a5b9-1138beb8acf8",
+      "id": "813d431c-ed84-4560-9da1-e6d0c96a27e9",
       "name": "1-2"
     },
     {
@@ -807,16 +807,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2380,
-        -80
+        2500,
+        400
       ],
-      "id": "5c727378-9e3f-4921-b5c7-9dfa954c09b0",
+      "id": "5a22b8bd-248f-4162-853d-90fc721b3479",
       "name": "Telegram8",
       "webhookId": "1d146467-5bc5-4235-9a6e-196ad03d60ed",
       "credentials": {
         "telegramApi": {
-          "id": "4wwqPAE1h8JpgkI6",
-          "name": "TravmeNET_bot"
+          "id": "AG5ES0zHiTaIhFiO",
+          "name": "Telegram account"
         }
       }
     },
@@ -825,10 +825,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        2220,
-        -40
+        2340,
+        440
       ],
-      "id": "ed52ab98-69df-4f0e-b999-47a22bf2591b",
+      "id": "2f3bcbf2-56de-4553-8dfc-91f17d1f2c5e",
       "name": "Wait",
       "webhookId": "50a3d6a0-7baa-4fbe-a4e6-16300d965884"
     },
@@ -841,16 +841,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -120,
-        -480
+        0,
+        0
       ],
-      "id": "f9b4bf63-665d-43a4-a2cc-e9ff545fea70",
+      "id": "3bd993a8-2e76-4df4-910f-6703d899457e",
       "name": "Telegram10",
       "webhookId": "3418e1f5-d481-4206-ae08-7a5358babf2c",
       "credentials": {
         "telegramApi": {
-          "id": "4wwqPAE1h8JpgkI6",
-          "name": "TravmeNET_bot"
+          "id": "AG5ES0zHiTaIhFiO",
+          "name": "Telegram account"
         }
       }
     }
@@ -1112,10 +1112,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "fd252866-c864-44e0-8870-23ad10130dea",
+  "versionId": "d3290152-6967-442b-85b0-34d28eb290be",
   "owner": {
-    "type": "personal",
-    "personalEmail": "doza4815162342@gmail.com"
+    "type": "team",
+    "teamId": "vc6apYnRRhgg1E0V",
+    "teamName": "Doza"
   },
   "parentFolderId": null
 }

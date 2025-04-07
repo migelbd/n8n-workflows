@@ -1,12 +1,13 @@
 {
-  "id": "4wwqPAE1h8JpgkI6",
+  "id": "AG5ES0zHiTaIhFiO",
   "name": "TravmeNET_bot",
   "type": "telegramApi",
   "data": {
     "accessToken": ""
   },
   "ownedBy": {
-    "type": "personal",
-    "personalEmail": "doza4815162342@gmail.com"
+    "type": "team",
+    "teamId": "vc6apYnRRhgg1E0V",
+    "teamName": "Doza"
   }
 }
