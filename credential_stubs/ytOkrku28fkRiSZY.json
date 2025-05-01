@@ -1,0 +1,13 @@
+{
+  "id": "ytOkrku28fkRiSZY",
+  "name": "OpenAi account",
+  "type": "openAiApi",
+  "data": {
+    "apiKey": "",
+    "url": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "eciubarov@gmail.com"
+  }
+}

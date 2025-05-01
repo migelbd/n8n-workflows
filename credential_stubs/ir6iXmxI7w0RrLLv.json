@@ -1,0 +1,13 @@
+{
+  "id": "ir6iXmxI7w0RrLLv",
+  "name": "OpenAi account",
+  "type": "openAiApi",
+  "data": {
+    "apiKey": "",
+    "url": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}

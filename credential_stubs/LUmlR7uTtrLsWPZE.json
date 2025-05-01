@@ -1,0 +1,12 @@
+{
+  "id": "LUmlR7uTtrLsWPZE",
+  "name": "Telegram account",
+  "type": "telegramApi",
+  "data": {
+    "accessToken": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "eciubarov@gmail.com"
+  }
+}

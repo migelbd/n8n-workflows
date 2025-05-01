@@ -1,0 +1,14 @@
+{
+  "id": "j4Lk5FixEz26AaCU",
+  "name": "My TG",
+  "type": "telePilotApi",
+  "data": {
+    "apiId": "",
+    "apiHash": "",
+    "phoneNumber": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}

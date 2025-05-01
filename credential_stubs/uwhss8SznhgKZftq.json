@@ -1,0 +1,12 @@
+{
+  "id": "uwhss8SznhgKZftq",
+  "name": "Telegram KsBot",
+  "type": "telegramApi",
+  "data": {
+    "accessToken": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "o.kesterson@yandex.ru"
+  }
+}

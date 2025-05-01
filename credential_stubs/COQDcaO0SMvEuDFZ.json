@@ -1,0 +1,13 @@
+{
+  "id": "COQDcaO0SMvEuDFZ",
+  "name": "WAHA account",
+  "type": "wahaApi",
+  "data": {
+    "url": "",
+    "apiKey": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}

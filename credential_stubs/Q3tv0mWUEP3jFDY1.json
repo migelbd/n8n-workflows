@@ -1,0 +1,12 @@
+{
+  "id": "Q3tv0mWUEP3jFDY1",
+  "name": "Telegram TestBot",
+  "type": "telegramApi",
+  "data": {
+    "accessToken": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}

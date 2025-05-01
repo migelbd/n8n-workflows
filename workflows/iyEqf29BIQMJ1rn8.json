@@ -1,0 +1,168 @@
+{
+  "id": "iyEqf29BIQMJ1rn8",
+  "name": "visa-store.com",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ba3bbd19-098a-4916-ae5f-fb129499a292",
+        "options": {}
+      },
+      "id": "cb717f0b-377e-4881-9f15-8278d49856e5",
+      "name": "Формы на сайте",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        260,
+        -220
+      ],
+      "webhookId": "ba3bbd19-098a-4916-ae5f-fb129499a292"
+    },
+    {
+      "parameters": {
+        "chatId": "-1002316337514",
+        "text": "=**ВИЗАСТОР**\nИмя: {{ $json.body.name }} \nТелефон: {{ $json.body.phone }} \nEmail: {{ $json.body.email }} \nIP: {{ $json.body.ip }} \nURL: {{ $json.body.href }} ",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "b7a879c9-0b58-4c3a-b789-82eddaeeb31c",
+      "name": "Telegram Leads",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        620,
+        -20
+      ],
+      "webhookId": "775f4933-0f08-4a48-a4fd-1676f2f0a19b",
+      "credentials": {
+        "telegramApi": {
+          "id": "LUmlR7uTtrLsWPZE",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://global-relocate.bitrix24.ru/rest/1/iv7h8mv7sc322e3y/crm.lead.add.json",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fields\": {\n    \"TITLE\": \"Новая заявка [КОММЕРЧ]\",\n    \"NAME\": \"{{ $json.body.name }}\",\n    \"PHONE\": [{\"VALUE\": \"{{ $json.body.phone }}\", \"VALUE_TYPE\": \"WORK\"}],\n    \"UF_CRM_HREF\": \"{{ $json.body.href }}\",\n    \"UF_CRM_IP\": \"{{ $json.body.ip }}\",\n    \"UF_CRM_METRIKA_CLIENT_ID\": \"{{ $json.body.metrika_client_id }}\",\n    \"UF_CRM_GENDER\": \"{{ ({\"male\": 2824, \"female\": 2826}[$('OpenAI').item.json.message.content.gender] || null) }}\",\n    \"UF_CRM_PREFERABLE_COUNTRY\": [{{ ({\"GE\": 3668,\"GR\": 3666,\"AU\": 2828,\"AT\": 2830,\"AZ\": 2832,\"AL\": 2834,\"DZ\": 2836,\"AO\": 2838,\"AD\": 2840,\"AG\": 2842,\"AR\": 2844,\"AM\": 2846,\"AF\": 2848,\"BS\": 2850,\"BD\": 2852,\"BB\": 2854,\"BH\": 2856,\"BZ\": 2858,\"BY\": 2860,\"BE\": 2862,\"BJ\": 2864,\"BG\": 2866,\"BO\": 2868,\"BA\": 2870,\"BW\": 2872,\"BR\": 2874,\"BN\": 2876,\"BF\": 2878,\"BI\": 2880,\"BT\": 2882,\"VU\": 2884,\"VA\": 2886,\"GB\": 2888,\"HU\": 2890,\"VE\": 2892,\"TL\": 2894,\"VN\": 2896,\"GA\": 2898,\"HT\": 2900,\"GY\": 2902,\"GM\": 2904,\"GH\": 2906,\"GT\": 2908,\"GN\": 2910,\"GW\": 2912,\"DE\": 2914,\"HN\": 2916,\"DJ\": 2918,\"DM\": 2920,\"DO\": 2922,\"EG\": 2924,\"ZM\": 2926,\"EH\": 2928,\"ZW\": 2930,\"IL\": 2932,\"IN\": 2934,\"ID\": 2936,\"JO\": 2938,\"IQ\": 2940,\"IR\": 2942,\"IE\": 2944,\"IS\": 2946,\"ES\": 2948,\"IT\": 2950,\"KZ\": 2952,\"KH\": 2954,\"CM\": 2956,\"CA\": 2958,\"QA\": 2960,\"KE\": 2962,\"CY\": 2964,\"KG\": 2966,\"KI\": 2968,\"CN\": 2970,\"CO\": 2972,\"KM\": 2974,\"CD\": 2976,\"CG\": 2978,\"KP\": 2980,\"KR\": 2982,\"CR\": 2984,\"CI\": 2986,\"CU\": 2988,\"KW\": 2990,\"LA\": 2992,\"LV\": 2994,\"LS\": 2996,\"LR\": 2998,\"LB\": 3000,\"LY\": 3002,\"LT\": 3004,\"LI\": 3006,\"LU\": 3008,\"MU\": 3010,\"MR\": 3012,\"MG\": 3014,\"MW\": 3016,\"MY\": 3018,\"ML\": 3020,\"MV\": 3022,\"MT\": 3024,\"MA\": 3026,\"MH\": 3028,\"MX\": 3030,\"FM\": 3032,\"MZ\": 3034,\"MD\": 3036,\"MC\": 3038,\"MN\": 3040,\"MM\": 3042,\"NA\": 3044,\"NR\": 3046,\"NP\": 3048,\"NE\": 3050,\"NG\": 3052,\"NL\": 3054,\"NI\": 3056,\"NZ\": 3058,\"NO\": 3060,\"AE\": 3062,\"OM\": 3064,\"PK\": 3066,\"PW\": 3068,\"PA\": 3070,\"PG\": 3072,\"PY\": 3074,\"PE\": 3076,\"PL\": 3078,\"PT\": 3080,\"RU\": 3082,\"RW\": 3084,\"RO\": 3086,\"SV\": 3088,\"WS\": 3090,\"SM\": 3092,\"ST\": 3094,\"SA\": 3096,\"MK\": 3098,\"SC\": 3100,\"SN\": 3102,\"VC\": 3104,\"KN\": 3106,\"LC\": 3108,\"RS\": 3110,\"SG\": 3112,\"SY\": 3114,\"SK\": 3116,\"SI\": 3118,\"SB\": 3120,\"SO\": 3122,\"SD\": 3124,\"SR\": 3126,\"US\": 3128,\"SL\": 3130,\"TJ\": 3132,\"TH\": 3134,\"TZ\": 3136,\"TG\": 3138,\"TO\": 3140,\"TT\": 3142,\"TV\": 3144,\"TN\": 3146,\"TM\": 3148,\"TR\": 3150,\"UG\": 3152,\"UZ\": 3154,\"UA\": 3156,\"UY\": 3158,\"FO\": 3160,\"FJ\": 3162,\"PH\": 3164,\"FI\": 3166,\"FR\": 3168,\"HR\": 3170,\"CF\": 3172,\"TD\": 3174,\"ME\": 3176,\"CZ\": 3178,\"CL\": 3180,\"CH\": 3182,\"SE\": 3184,\"LK\": 3186,\"EC\": 3188,\"GQ\": 3190,\"ER\": 3192,\"EE\": 3194,\"ET\": 3196,\"ZA\": 3198,\"JM\": 3200}[$('OpenAI').item.json.message.content.preferable_country] || null) }}],\n    \"STATUS_ID\": \"NEW\"\n  }\n}",
+        "options": {}
+      },
+      "id": "7d49dbe8-967f-4318-bdb4-ddbc906fce8e",
+      "name": "Bitrix Create Lead Коммерч.",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1240,
+        -520
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Detect gender base on name: {{ $json.body.name }}. Detect country base on ip: {{ $json[\"body\"][\"ip\"] }}. Detect preferable country ISO2 code base on url, if url countains country name: {{ $json[\"body\"][\"href\"] }}. Return only json with keys gender, lead_country, preferable_country."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        620,
+        -220
+      ],
+      "id": "0cbb538b-2b59-422d-aeed-bb4543c82670",
+      "name": "OpenAI",
+      "alwaysOutputData": false,
+      "credentials": {
+        "openAiApi": {
+          "id": "ytOkrku28fkRiSZY",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1040,
+        -520
+      ],
+      "id": "ee25be3f-057a-402b-ae73-a2796a9151af",
+      "name": "Merge"
+    }
+  ],
+  "connections": {
+    "Формы на сайте": {
+      "main": [
+        [
+          {
+            "node": "Telegram Leads",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Bitrix Create Lead Коммерч.",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "81649399-273a-49ae-8531-f70bef90ad20",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "eciubarov@gmail.com"
+  },
+  "parentFolderId": null
+}
