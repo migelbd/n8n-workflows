@@ -1,0 +1,12 @@
+{
+  "id": "K9lCoxIEkSDoJE0b",
+  "name": "RjjakaBot",
+  "type": "telegramApi",
+  "data": {
+    "accessToken": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}

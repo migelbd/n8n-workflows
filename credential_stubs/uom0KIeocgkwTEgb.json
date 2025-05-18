@@ -1,0 +1,16 @@
+{
+  "id": "uom0KIeocgkwTEgb",
+  "name": "TimescaleDB PBOT",
+  "type": "timescaleDb",
+  "data": {
+    "host": "",
+    "database": "",
+    "user": "",
+    "password": ""
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "vc6apYnRRhgg1E0V",
+    "teamName": "Doza"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "ykVej8v41Gk8hjgU",
+  "name": "Postgres PBOT",
+  "type": "postgres",
+  "data": {
+    "host": "",
+    "database": "",
+    "user": "",
+    "password": ""
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "vc6apYnRRhgg1E0V",
+    "teamName": "Doza"
+  }
+}

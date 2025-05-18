@@ -1,0 +1,15 @@
+{
+  "id": "Vu6ZVutj5Pc4hYyA",
+  "name": "TimescaleDB DBServer Admin",
+  "type": "timescaleDb",
+  "data": {
+    "host": "",
+    "database": "",
+    "user": "",
+    "password": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}

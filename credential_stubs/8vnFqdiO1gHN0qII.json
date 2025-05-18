@@ -1,0 +1,13 @@
+{
+  "id": "8vnFqdiO1gHN0qII",
+  "name": "Redis account",
+  "type": "redis",
+  "data": {
+    "host": "",
+    "database": 2
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}

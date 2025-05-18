@@ -1,0 +1,13 @@
+{
+  "id": "xkhwrExzZzJ1rWNK",
+  "name": "Unnamed credential",
+  "type": "httpBasicAuth",
+  "data": {
+    "user": "",
+    "password": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}

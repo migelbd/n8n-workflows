@@ -3,12 +3,28 @@
     {
       "id": "lQx7ul4sPFOhe5Ri",
       "name": "form"
+    },
+    {
+      "id": "ooP7qQaD0xZUSZKK",
+      "name": "TGbot"
+    },
+    {
+      "id": "LgZseorizJVn1fSF",
+      "name": "rag"
+    },
+    {
+      "id": "cUWS1rMl8ciZNGWB",
+      "name": "test"
     }
   ],
   "mappings": [
     {
       "workflowId": "wQezzWxW0cjIxz6R",
       "tagId": "lQx7ul4sPFOhe5Ri"
+    },
+    {
+      "workflowId": "h4XEhTtpmKkEwEG5",
+      "tagId": "ooP7qQaD0xZUSZKK"
     }
   ]
 }

@@ -1,0 +1,12 @@
+{
+  "id": "dpIZVJnc4qKMuSTF",
+  "name": "QdrantApi DBServer",
+  "type": "qdrantApi",
+  "data": {
+    "qdrantUrl": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}

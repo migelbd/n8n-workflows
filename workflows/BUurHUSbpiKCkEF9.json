@@ -1,0 +1,1683 @@
+{
+  "id": "BUurHUSbpiKCkEF9",
+  "name": "Бот предложка",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message",
+          "callback_query"
+        ],
+        "additionalFields": {
+          "download": true,
+          "imageSize": "large"
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -960,
+        -80
+      ],
+      "id": "bb741d92-e0d1-4aee-8be8-287cde54ae7a",
+      "name": "Входящие сообщения",
+      "webhookId": "1b60de32-6e89-4264-a3c6-73a6ecfecd98",
+      "credentials": {
+        "telegramApi": {
+          "id": "Q3tv0mWUEP3jFDY1",
+          "name": "Telegram TestBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "62624ebf-4fcb-42eb-87fe-a63c107e007c",
+                    "leftValue": "={{ $json.message }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "object",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Сообщение"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6a47b5d8-9f06-49b7-8893-e126f02b1a04",
+                    "leftValue": "={{ $json.callback_query }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "object",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Кнопки"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "Неизвестно"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        440,
+        -100
+      ],
+      "id": "78c257c2-2682-48b4-aee2-a60539fab4f1",
+      "name": "Определение пути",
+      "alwaysOutputData": false,
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "users",
+          "mode": "list",
+          "cachedResultName": "users"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "is_premium": "={{ $json.is_premium }}",
+            "telegram_id": "={{ $json.id }}",
+            "first_name": "={{ $json.first_name }}",
+            "last_name": "={{ $json.last_name }}",
+            "username": "={{ $json.username }}",
+            "updated_at": "={{ DateTime.local() }}"
+          },
+          "matchingColumns": [
+            "telegram_id"
+          ],
+          "schema": [
+            {
+              "id": "telegram_id",
+              "displayName": "telegram_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "first_name",
+              "displayName": "first_name",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "last_name",
+              "displayName": "last_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "is_premium",
+              "displayName": "is_premium",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false,
+              "removed": true
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "replaceEmptyStrings": true
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -60,
+        -200
+      ],
+      "id": "ae8aa061-4e7a-4587-827f-7e16eae4d56d",
+      "name": "Сохранение в БД",
+      "credentials": {
+        "postgres": {
+          "id": "ykVej8v41Gk8hjgU",
+          "name": "Postgres PBOT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "Привет, странник! Напиши сообщение которое хочешь опубликовать в канале.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3380,
+        -340
+      ],
+      "id": "65ca3dd1-76a2-4b43-be6e-f6e58ccbbc65",
+      "name": "Приветствие",
+      "webhookId": "79834107-d467-47a1-b699-76ee0c4d223d",
+      "credentials": {
+        "telegramApi": {
+          "id": "Q3tv0mWUEP3jFDY1",
+          "name": "Telegram TestBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e49b1374-d3cc-49c5-a02c-a02273107aaf",
+              "name": "admin_id",
+              "value": 177588546,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1880,
+        -500
+      ],
+      "id": "61466501-6d84-4717-8f17-28fa0dc3fa72",
+      "name": "Настройки"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cb77a882-eb04-4a84-acd6-a4110377536e",
+              "leftValue": "={{ $json.message.text }}",
+              "rightValue": "/start",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "3b72a585-f994-410f-95d6-7d26086d37e7",
+              "leftValue": "={{ $json.message.entities[0].type }}",
+              "rightValue": "bot_command",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2380,
+        -380
+      ],
+      "id": "f1132429-1884-4c2e-a204-c27d97cce334",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        400,
+        160
+      ],
+      "id": "81429dd3-6018-4092-9c3b-32340ba0c96c",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch",
+        "useDataOfInput": 2
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        220,
+        -100
+      ],
+      "id": "88997e31-e2cb-47a4-9a9e-719e1afa1121",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5c83bfd1-5c88-4449-a106-5cdc9a492a8a",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2960,
+        -180
+      ],
+      "id": "442950f7-f0d4-4ae6-b377-76e9d1b90ba9",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "requests",
+          "mode": "list",
+          "cachedResultName": "requests"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "from_user",
+              "value": "={{ $json.message.from.id }}"
+            },
+            {
+              "column": "status",
+              "value": "created"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2640,
+        -200
+      ],
+      "id": "f3765f63-c8e5-4ff3-b731-3a69de9de332",
+      "name": "Поиск запросов",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "ykVej8v41Gk8hjgU",
+          "name": "Postgres PBOT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "requests",
+          "mode": "list",
+          "cachedResultName": "requests"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "from_user": "={{ $('Определение пути').item.json.message.from.id }}",
+            "updated_at": "={{ DateTime.local() }}",
+            "content": "={{ $('Определение пути').item.json.message }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "from_user",
+              "displayName": "from_user",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1520,
+        -500
+      ],
+      "id": "b7a904e1-1a2b-42f0-92b5-f92e6018e33d",
+      "name": "Создание запроса",
+      "credentials": {
+        "postgres": {
+          "id": "ykVej8v41Gk8hjgU",
+          "name": "Postgres PBOT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Входящие сообщения').item.json.message.chat.id }}",
+        "text": "У вас уже есть активный запрос, дождитесь его одобрения",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3380,
+        -160
+      ],
+      "id": "39837e66-659d-4105-a28e-cee3ca9e050a",
+      "name": "Уже существует запрос",
+      "webhookId": "21136daa-4246-4c18-93c2-a1d474687ccb",
+      "credentials": {
+        "telegramApi": {
+          "id": "Q3tv0mWUEP3jFDY1",
+          "name": "Telegram TestBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Входящие сообщения').item.json.message.chat.id }}",
+        "text": "Сообщение на модерации",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1700,
+        -500
+      ],
+      "id": "db47ade5-dcd3-4538-bca2-043f58bc39f5",
+      "name": "Запрос на модерации",
+      "webhookId": "3492f91d-3009-47a6-844f-3f975f194c01",
+      "credentials": {
+        "telegramApi": {
+          "id": "Q3tv0mWUEP3jFDY1",
+          "name": "Telegram TestBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.admin_id }}",
+        "text": "=Новое предложение!\n\n{{ $('Входящие сообщения').item.json.message.text }}\n\nОт {{ $('Входящие сообщения').item.json.message.from.first_name }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "Опубликовать",
+                    "additionalFields": {
+                      "callback_data": "=pub_yes:{{ $('Создание запроса').item.json.id }}"
+                    }
+                  },
+                  {
+                    "text": "=Отклонить",
+                    "additionalFields": {
+                      "callback_data": "=pub_no:{{ $('Создание запроса').item.json.id }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2040,
+        -500
+      ],
+      "id": "845c6422-01a0-41c5-84ff-8a0e42b598f7",
+      "name": "Уведомление админа",
+      "webhookId": "5565471d-47ca-4e91-b46f-4d59358d00bd",
+      "credentials": {
+        "telegramApi": {
+          "id": "Q3tv0mWUEP3jFDY1",
+          "name": "Telegram TestBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nlet from_user = null;\nif(typeof input.message != 'undefined'){\n  from_user = input.message.from;\n}\nelse if(typeof input.callback_query != 'undefined'){\n  from_user = input.callback_query.from;\n}\n\nreturn from_user;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -620,
+        -200
+      ],
+      "id": "d1940998-310e-4ec1-8941-afd409685448",
+      "name": "Получение пользователя"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.callback_query.data }}",
+                    "rightValue": "pub_yes",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    },
+                    "id": "73281740-297c-4e3c-b49c-5dcf8fb655db"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Опубликовать"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "83c55e22-ab79-45a5-9a82-725ada8b2346",
+                    "leftValue": "={{ $json.callback_query.data }}",
+                    "rightValue": "pub_no",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Отклонить"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        660,
+        300
+      ],
+      "id": "58d77d6f-64af-4f31-9b43-1c81da0edf9c",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "resource": "callback",
+        "queryId": "={{ $json.callback_query.id }}",
+        "additionalFields": {
+          "text": "Ошибка"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        880,
+        500
+      ],
+      "id": "0708781c-4012-4ed1-8fe4-9b23b2e9be93",
+      "name": "Telegram",
+      "webhookId": "b1b1a39d-95d4-4981-9aec-95a5bee85f8a",
+      "credentials": {
+        "telegramApi": {
+          "id": "AG5ES0zHiTaIhFiO",
+          "name": "TravmeNET_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "requests",
+          "mode": "list",
+          "cachedResultName": "requests"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "id",
+              "value": "={{ $json.request_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1320,
+        200
+      ],
+      "id": "1a1306a4-6062-4de1-b849-9295837c11ed",
+      "name": "Поиск запросов1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "ykVej8v41Gk8hjgU",
+          "name": "Postgres PBOT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "textsWithManipulations": {
+          "textsWithManipulationsValues": [
+            {
+              "dataSources": {
+                "dataSource": [
+                  {
+                    "text": "={{ $json.callback_query.data }}",
+                    "destinationKey": "request_id"
+                  }
+                ]
+              },
+              "manipulations": {
+                "manipulation": [
+                  {
+                    "action": "replace",
+                    "substring": "pub_yes:"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-text-manipulation.textManipulation",
+      "typeVersion": 1,
+      "position": [
+        880,
+        100
+      ],
+      "id": "0834afa8-3bee-4ac8-a109-0c385c3e8901",
+      "name": "TextManipulation"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.admin_id }}",
+        "text": "={{ $('Опубликовано').item.json.content.text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3060,
+        80
+      ],
+      "id": "cb71856d-c672-47e1-b07f-0ee2edd9c411",
+      "name": "Публикация в канал",
+      "webhookId": "5565471d-47ca-4e91-b46f-4d59358d00bd",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "Q3tv0mWUEP3jFDY1",
+          "name": "Telegram TestBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "deleteMessage",
+        "chatId": "={{ $('Входящие сообщения').item.json.callback_query.message.chat.id }}",
+        "messageId": "={{ $('Входящие сообщения').item.json.callback_query.message.message_id }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2420,
+        200
+      ],
+      "id": "71bf5ea5-195a-430c-a3d5-895581260f12",
+      "name": "Удаление сообщения",
+      "webhookId": "38e29812-a0a3-4366-9032-5585df456dab",
+      "credentials": {
+        "telegramApi": {
+          "id": "Q3tv0mWUEP3jFDY1",
+          "name": "Telegram TestBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "callback",
+        "queryId": "={{ $('Входящие сообщения').item.json.callback_query.id }}",
+        "additionalFields": {
+          "text": "Опубликовано"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2200,
+        200
+      ],
+      "id": "eb3f2692-7f9a-4f1e-be9d-3fb8e36ddc90",
+      "name": "Ответ на кнопку",
+      "webhookId": "b1b1a39d-95d4-4981-9aec-95a5bee85f8a",
+      "credentials": {
+        "telegramApi": {
+          "id": "Q3tv0mWUEP3jFDY1",
+          "name": "Telegram TestBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "textsWithManipulations": {
+          "textsWithManipulationsValues": [
+            {
+              "dataSources": {
+                "dataSource": [
+                  {
+                    "text": "={{ $json.callback_query.data }}",
+                    "destinationKey": "request_id"
+                  }
+                ]
+              },
+              "manipulations": {
+                "manipulation": [
+                  {
+                    "action": "replace",
+                    "substring": "pub_no:"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-text-manipulation.textManipulation",
+      "typeVersion": 1,
+      "position": [
+        880,
+        300
+      ],
+      "id": "462bdd4c-358b-405f-86b8-ce7e0f577bcf",
+      "name": "TextManipulation1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9533d834-2e9c-4ceb-bdc7-10414ff791d9",
+              "leftValue": "={{ $('Merge2').item.json.callback_query.data }}",
+              "rightValue": "pub_yes",
+              "operator": {
+                "type": "string",
+                "operation": "startsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1540,
+        200
+      ],
+      "id": "bba7b7f7-5b9d-4ee5-96bc-952490745691",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "requests",
+          "mode": "list",
+          "cachedResultName": "requests"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "updated_at": "={{ DateTime.local() }}",
+            "status": "published"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "from_user",
+              "displayName": "from_user",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1760,
+        100
+      ],
+      "id": "c2272f91-d23b-42ec-89a9-1ba49a1127d9",
+      "name": "Опубликовано",
+      "credentials": {
+        "postgres": {
+          "id": "ykVej8v41Gk8hjgU",
+          "name": "Postgres PBOT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "requests",
+          "mode": "list",
+          "cachedResultName": "requests"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "updated_at": "={{ DateTime.local() }}",
+            "status": "decline"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "from_user",
+              "displayName": "from_user",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1760,
+        300
+      ],
+      "id": "428b5b2c-d3b1-49c8-96f6-9a93d46a7f5b",
+      "name": "Отклонено",
+      "credentials": {
+        "postgres": {
+          "id": "ykVej8v41Gk8hjgU",
+          "name": "Postgres PBOT"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1980,
+        200
+      ],
+      "id": "8a41c153-cfe3-459d-9bd4-b2deaf2d64a4",
+      "name": "Merge"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1100,
+        200
+      ],
+      "id": "ba4cb6f2-d96d-4e16-8b82-ef45a46c9dbc",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Поиск запросов1').item.json.from_user }}",
+        "text": "Извините ваш запрос был отклонен",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3380,
+        200
+      ],
+      "id": "47b0f37b-1dd1-48d8-9392-6f942d106940",
+      "name": "Отказ",
+      "webhookId": "5565471d-47ca-4e91-b46f-4d59358d00bd",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "Q3tv0mWUEP3jFDY1",
+          "name": "Telegram TestBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Поиск запросов1').item.json.from_user }}",
+        "text": "Ваш запрос опубликован",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3380,
+        20
+      ],
+      "id": "d0831a9e-28ba-4a99-b4ed-df5cdcc81c18",
+      "name": "Успех",
+      "webhookId": "5565471d-47ca-4e91-b46f-4d59358d00bd",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "Q3tv0mWUEP3jFDY1",
+          "name": "Telegram TestBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Сообщения пользователю",
+        "height": 860,
+        "width": 300
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3300,
+        -440
+      ],
+      "typeVersion": 1,
+      "id": "0de5fdfd-4b74-413b-b78e-9b10952fdad6",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0e469cb3-3651-4dfa-8c24-6423f7ca84d6",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "published",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2860,
+        200
+      ],
+      "id": "570f024a-6251-44f3-9432-2032f04ac884",
+      "name": "Проверка пути"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e49b1374-d3cc-49c5-a02c-a02273107aaf",
+              "name": "admin_id",
+              "value": 177588546,
+              "type": "number"
+            },
+            {
+              "id": "b37e1a45-30a8-4ea3-9acc-5500e53379bd",
+              "name": "status",
+              "value": "={{ $('Merge').item.json.status }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2640,
+        200
+      ],
+      "id": "6d4ac1f3-3c54-4384-9a26-395ce49c251b",
+      "name": "Настройки канала",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "telegram_id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "key": "username",
+              "value": "={{ $json.username }}"
+            },
+            {
+              "key": "name",
+              "value": "={{ $json.first_name }} {{ $json.last_name }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        -200
+      ],
+      "id": "d966ab05-971d-4b13-8adf-952c11003ae8",
+      "name": "Execution Data"
+    }
+  ],
+  "connections": {
+    "Входящие сообщения": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Получение пользователя",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Определение пути": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Сохранение в БД": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Настройки": {
+      "main": [
+        [
+          {
+            "node": "Уведомление админа",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Приветствие",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Поиск запросов",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Определение пути",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Уже существует запрос",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Создание запроса",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Поиск запросов": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Создание запроса": {
+      "main": [
+        [
+          {
+            "node": "Запрос на модерации",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Запрос на модерации": {
+      "main": [
+        [
+          {
+            "node": "Настройки",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Получение пользователя": {
+      "main": [
+        [
+          {
+            "node": "Execution Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "TextManipulation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "TextManipulation1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TextManipulation": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Поиск запросов1": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Удаление сообщения": {
+      "main": [
+        [
+          {
+            "node": "Настройки канала",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ответ на кнопку": {
+      "main": [
+        [
+          {
+            "node": "Удаление сообщения",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TextManipulation1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Опубликовано",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Отклонено",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Опубликовано": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Отклонено": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Ответ на кнопку",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Поиск запросов1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Публикация в канал": {
+      "main": [
+        [
+          {
+            "node": "Успех",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Проверка пути": {
+      "main": [
+        [
+          {
+            "node": "Публикация в канал",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Отказ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Настройки канала": {
+      "main": [
+        [
+          {
+            "node": "Проверка пути",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data": {
+      "main": [
+        [
+          {
+            "node": "Сохранение в БД",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "dd7377a0-d6a6-49ef-af2e-62b605a967bb",
+  "owner": {
+    "type": "team",
+    "teamId": "vc6apYnRRhgg1E0V",
+    "teamName": "Doza"
+  },
+  "parentFolderId": null
+}

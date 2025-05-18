@@ -1,0 +1,14 @@
+{
+  "id": "7mJi96DOGvdVzUpa",
+  "name": "MongoDB DBServer Admin",
+  "type": "mongoDb",
+  "data": {
+    "configurationType": "",
+    "connectionString": "",
+    "database": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}
