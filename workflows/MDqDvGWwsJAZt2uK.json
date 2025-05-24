@@ -1,0 +1,167 @@
+{
+  "id": "MDqDvGWwsJAZt2uK",
+  "name": "CoPilot",
+  "nodes": [
+    {
+      "parameters": {
+        "events": [
+          "updateNewMessage"
+        ],
+        "options": {
+          "ignoreGroups": true
+        }
+      },
+      "type": "@telepilotco/n8n-nodes-telepilot.telePilotTrigger",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        0
+      ],
+      "id": "b85a618e-e842-44b6-8f3d-ac8fcbbbac60",
+      "name": "TelePilot Trigger",
+      "credentials": {
+        "telePilotApi": {
+          "id": "j4Lk5FixEz26AaCU",
+          "name": "My TG"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9bdf504e-02f1-44ee-99a8-802d2e716988",
+              "leftValue": "={{ $json.message.sender_id._ }}",
+              "rightValue": "messageSenderUser",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "f67950e6-6d2b-4c2a-98ff-effca4b8402f",
+              "leftValue": "={{ $json.message.content.text.text }}",
+              "rightValue": "ping",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -80,
+        0
+      ],
+      "id": "11d13ca0-666e-4c55-952c-72935f5f42f4",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "sendChatAction",
+        "chat_id": "={{ $json.message.chat_id }}"
+      },
+      "type": "@telepilotco/n8n-nodes-telepilot.telePilot",
+      "typeVersion": 1,
+      "position": [
+        200,
+        -120
+      ],
+      "id": "28f045d4-fa3e-4610-9d60-17ef22cc82c1",
+      "name": "Telegram CoPilot",
+      "credentials": {
+        "telePilotApi": {
+          "id": "j4Lk5FixEz26AaCU",
+          "name": "My TG"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "chat_id": "={{ $('If').item.json.message.chat_id }}",
+        "messageText": "Я пока занят!",
+        "message_thread_id": 0,
+        "reply_to_msg_id": "={{ $('If').item.json.message.id }}"
+      },
+      "type": "@telepilotco/n8n-nodes-telepilot.telePilot",
+      "typeVersion": 1,
+      "position": [
+        380,
+        -120
+      ],
+      "id": "3ab5bc93-47f9-4c8d-a3f0-3602f401702b",
+      "name": "Telegram CoPilot1",
+      "credentials": {
+        "telePilotApi": {
+          "id": "j4Lk5FixEz26AaCU",
+          "name": "My TG"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "TelePilot Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Telegram CoPilot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram CoPilot": {
+      "main": [
+        [
+          {
+            "node": "Telegram CoPilot1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "triggerCount": 0,
+  "versionId": "2620aadc-3254-40a4-b5a0-8a7f1d273a0b",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

@@ -1,0 +1,13 @@
+{
+  "id": "fK3dBUcIC9jAIo3T",
+  "name": "NocoDB DevConf",
+  "type": "nocoDbApiToken",
+  "data": {
+    "apiToken": "",
+    "host": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}

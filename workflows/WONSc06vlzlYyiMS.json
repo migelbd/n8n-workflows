@@ -1,0 +1,47 @@
+{
+  "id": "WONSc06vlzlYyiMS",
+  "name": "My workflow 5",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Обратный звонок",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Ваше имя",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Телефон",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "buttonLabel": "Отправить"
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4357231e-d205-4c4f-8ffc-86fcb36bedb4",
+      "name": "On form submission",
+      "webhookId": "e814e067-a7ed-471a-8709-cc48451f8581"
+    }
+  ],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "34453afa-4407-487e-8dc5-d6b843780a86",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "o.kesterson@yandex.ru"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

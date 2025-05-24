@@ -1,0 +1,13 @@
+{
+  "id": "YYMAkRIbVkykkcPp",
+  "name": "Telegram Reposter",
+  "type": "telegramApi",
+  "data": {
+    "accessToken": ""
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "T6Im4HMHj8P4WdMl",
+    "teamName": "Репостер"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "id": "ZsK2tjJZ3yn6mENF",
+  "name": "Login in tg",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "3f8f54a0-ff4b-4e6a-9302-94f1ed587cb6",
+      "name": "When chat message received",
+      "webhookId": "c2ba5a89-415a-4229-bd04-9fdfb9e99724"
+    },
+    {
+      "parameters": {
+        "resource": "login"
+      },
+      "type": "@telepilotco/n8n-nodes-telepilot.telePilot",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "0ed35b89-97e8-4e63-adba-d351c8aebc1e",
+      "name": "Telegram CoPilot",
+      "credentials": {
+        "telePilotApi": {
+          "id": "j4Lk5FixEz26AaCU",
+          "name": "My TG"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "user"
+      },
+      "type": "@telepilotco/n8n-nodes-telepilot.telePilot",
+      "typeVersion": 1,
+      "position": [
+        140,
+        220
+      ],
+      "id": "8ac81e4e-2d58-4abe-8479-7512524f9e55",
+      "name": "Telegram CoPilot1",
+      "credentials": {
+        "telePilotApi": {
+          "id": "j4Lk5FixEz26AaCU",
+          "name": "My TG"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Telegram CoPilot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "2acb7c0d-14a1-456f-b25c-5af4edb98d7f",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

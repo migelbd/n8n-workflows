@@ -1,0 +1,217 @@
+{
+  "id": "YV4AZXAOy0APQC3z",
+  "name": "My workflow 6",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        0
+      ],
+      "id": "8cc28bf1-9554-4977-97ca-589b35c0ccfa",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appY90WMb7HViCIa3",
+          "mode": "list",
+          "cachedResultName": "Reposter",
+          "cachedResultUrl": "https://airtable.com/appY90WMb7HViCIa3"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblIwB7GgtKP5u64a",
+          "mode": "list",
+          "cachedResultName": "Sources",
+          "cachedResultUrl": "https://airtable.com/appY90WMb7HViCIa3/tblIwB7GgtKP5u64a"
+        },
+        "filterByFormula": "{IsEnabled}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        120,
+        0
+      ],
+      "id": "ce88b28a-99b1-4a4d-ad84-c0f921038bf2",
+      "name": "Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "IuGmwnJhMmBgmSNX",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        560,
+        0
+      ],
+      "id": "70ad7016-2e49-49f9-af88-3835e90901f7",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "value": "appY90WMb7HViCIa3",
+          "mode": "list",
+          "cachedResultName": "Reposter",
+          "cachedResultUrl": "https://airtable.com/appY90WMb7HViCIa3"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblx5o8L5tUawl8nN",
+          "mode": "list",
+          "cachedResultName": "Channels",
+          "cachedResultUrl": "https://airtable.com/appY90WMb7HViCIa3/tblx5o8L5tUawl8nN"
+        },
+        "id": "={{ $json.Channels }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        780,
+        20
+      ],
+      "id": "f046a879-fa33-4a14-811b-2838f8cb3ef4",
+      "name": "Airtable1",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "IuGmwnJhMmBgmSNX",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "Channels",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        340,
+        0
+      ],
+      "id": "c8b03f9c-d7ec-491f-a843-0874bdfd838f",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.TelegramID }}",
+        "text": "Tesst",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1020,
+        20
+      ],
+      "id": "1d3d5bf2-c3f3-46b1-af63-66432006441c",
+      "name": "Telegram",
+      "webhookId": "53ef211d-6131-4b4c-95b7-9cea53781c6f",
+      "credentials": {
+        "telegramApi": {
+          "id": "Q3tv0mWUEP3jFDY1",
+          "name": "Telegram TestBot"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Airtable1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable1": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "e4e562b5-93c8-41bc-91c2-c43799ce9af3",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

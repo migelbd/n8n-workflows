@@ -1,0 +1,13 @@
+{
+  "id": "75JDV70WcbUlPpox",
+  "name": "Directus Api account",
+  "type": "directusApi",
+  "data": {
+    "url": "",
+    "accessToken": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}

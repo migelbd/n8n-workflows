@@ -1,0 +1,152 @@
+{
+  "id": "57u5gQbVya64mnSj",
+  "name": "Index load",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "alfa_mw_2",
+          "mode": "id"
+        },
+        "embeddingBatchSize": 400,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        0
+      ],
+      "id": "30f4eb2d-b1ff-4b3c-a724-a453385d9a47",
+      "name": "Qdrant Vector Store",
+      "credentials": {
+        "qdrantApi": {
+          "id": "dpIZVJnc4qKMuSTF",
+          "name": "QdrantApi DBServer"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        380,
+        220
+      ],
+      "id": "fe50cd6f-0e17-4d34-a894-7683e40566c1",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "chunkOverlap": 300,
+        "options": {
+          "splitCode": "markdown"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        440,
+        420
+      ],
+      "id": "91c7c27c-03a9-4150-b4bc-f6705269f208",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        180,
+        220
+      ],
+      "id": "ccd545c2-95b1-4b70-be24-d69c67ff0271",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "ir6iXmxI7w0RrLLv",
+          "name": "OpenAi Sven account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "24d96c5d-f930-456f-8cae-d32a2629aab7",
+      "name": "When chat message received",
+      "webhookId": "391abdf5-b1ce-4593-abab-d6398d6dc6e7"
+    }
+  ],
+  "connections": {
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "fab482c0-dac8-48f8-87e1-b7ccf35ed713",
+  "owner": {
+    "type": "team",
+    "teamId": "CnpbdNslr56otFnl",
+    "teamName": "RAG DB"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

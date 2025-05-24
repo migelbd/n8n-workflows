@@ -1,0 +1,417 @@
+{
+  "id": "Prw9WTtBr28yDkvq",
+  "name": "Авто-ответчик для отпуска",
+  "nodes": [
+    {
+      "parameters": {
+        "events": [
+          "updateNewMessage"
+        ],
+        "options": {
+          "ignoreGroups": false
+        }
+      },
+      "type": "@telepilotco/n8n-nodes-telepilot.telePilotTrigger",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        -60
+      ],
+      "id": "68116dbe-be32-4168-af56-ccbf21953233",
+      "name": "TelePilot Trigger",
+      "credentials": {
+        "telePilotApi": {
+          "id": "j4Lk5FixEz26AaCU",
+          "name": "My TG"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "chats",
+          "mode": "list",
+          "cachedResultName": "chats"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "telegram_id",
+              "value": "={{ $('TelePilot Trigger').item.json.message.chat_id }}"
+            },
+            {
+              "column": "enable",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1240,
+        -80
+      ],
+      "id": "0ac0aaff-b888-45e9-89b9-9d7bed81a3e0",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "XyaFOKD4KNwemcOk",
+          "name": "Postgres co_pilot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "19370340-d515-4366-a287-e8cedac0efd1",
+              "leftValue": "={{ $json.message.is_outgoing }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "1e7ea987-a1cd-4d56-8435-67a745d87d2d",
+              "leftValue": "={{ $json.message.content.text.entities }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        120,
+        -60
+      ],
+      "id": "1d5348c6-511a-4260-a292-206424c62d5e",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2cabaa92-1500-484f-95d5-04e2074f4390",
+              "leftValue": "={{ $json._ }}",
+              "rightValue": "textEntity",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "c933cad3-48dd-4f0b-aa02-41b4df5b4073",
+              "leftValue": "={{ $json.type._ }}",
+              "rightValue": "textEntityTypeMention",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        -60
+      ],
+      "id": "3bc45ff7-b1db-4280-85e5-2154fd2de9cf",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "message.content.text.entities",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        340,
+        -60
+      ],
+      "id": "47157b14-36bf-4ddf-9752-f52bc07cbe42",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "textsWithManipulations": {
+          "textsWithManipulationsValues": [
+            {
+              "dataSources": {
+                "dataSource": [
+                  {
+                    "text": "={{ $('If').item.json.message.content.text.text }}"
+                  }
+                ]
+              },
+              "manipulations": {
+                "manipulation": [
+                  {
+                    "action": "substring",
+                    "startPosition": "={{ $('If').item.json.message.content.text.entities[0].offset }}",
+                    "end": "length",
+                    "endLength": "={{ $('If').item.json.message.content.text.entities[0].length }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-text-manipulation.textManipulation",
+      "typeVersion": 1,
+      "position": [
+        780,
+        -60
+      ],
+      "id": "0a9e49e9-ced9-4552-9534-395d06ed3586",
+      "name": "TextManipulation"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "55aebf11-e7f6-45aa-8d79-4a76ff00eeef",
+              "leftValue": "={{ $json.data }}",
+              "rightValue": "@Sven_R",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1000,
+        -60
+      ],
+      "id": "556ce9e6-4fb7-4b22-b201-de477d71f970",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "sendChatAction",
+        "chat_id": "={{ $json.telegram_id }}"
+      },
+      "type": "@telepilotco/n8n-nodes-telepilot.telePilot",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        -80
+      ],
+      "id": "c5132837-88f5-42a7-906f-f1ea8cc7a9d9",
+      "name": "Telegram CoPilot",
+      "credentials": {
+        "telePilotApi": {
+          "id": "j4Lk5FixEz26AaCU",
+          "name": "My TG"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1680,
+        -80
+      ],
+      "id": "29fa7f97-fb08-42e3-aae3-61fd6aedcde2",
+      "name": "Wait",
+      "webhookId": "7cdc9a67-8963-4515-9369-d893b829cb18"
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "chat_id": "={{ $('Postgres').item.json.telegram_id }}",
+        "messageText": "=Извините. Я в отпуске до 2 июня \n\n! Автоматический ответ",
+        "message_thread_id": 0,
+        "reply_to_msg_id": "={{ $('TelePilot Trigger').item.json.message.id }}"
+      },
+      "type": "@telepilotco/n8n-nodes-telepilot.telePilot",
+      "typeVersion": 1,
+      "position": [
+        1900,
+        -80
+      ],
+      "id": "0234afe4-00cb-44ed-bca0-bc98786ac4cc",
+      "name": "Telegram CoPilot1",
+      "credentials": {
+        "telePilotApi": {
+          "id": "j4Lk5FixEz26AaCU",
+          "name": "My TG"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "TelePilot Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "TextManipulation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TextManipulation": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Telegram CoPilot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram CoPilot": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Telegram CoPilot1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "78806074-7cf9-4e4f-a51a-d5dc540d53eb",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

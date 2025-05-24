@@ -1,0 +1,162 @@
+{
+  "id": "oWIBv7YzlSP0aZf2",
+  "name": "Загрузка данных",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Загрузка данных",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Файл",
+              "fieldType": "file",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "80e45cbb-ec19-4f72-8b4a-cce85439faba",
+      "name": "On form submission",
+      "webhookId": "35bb2a18-dba8-493e-85d4-ca9d37c248e5"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "test_docs",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.1,
+      "position": [
+        236,
+        0
+      ],
+      "id": "4f2f5103-feb0-4710-9cb8-b3102b385470",
+      "name": "Qdrant Vector Store",
+      "credentials": {
+        "qdrantApi": {
+          "id": "dpIZVJnc4qKMuSTF",
+          "name": "QdrantApi DBServer"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        220
+      ],
+      "id": "44fcad63-3542-43f4-b01b-6839ebaa2172",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "ir6iXmxI7w0RrLLv",
+          "name": "OpenAi Sven account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "options": {
+          "splitPages": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        400,
+        220
+      ],
+      "id": "0f452ffd-01cb-446b-a43f-ff5d6234f34c",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "chunkOverlap": 200,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        420,
+        420
+      ],
+      "id": "94bc5501-cf7e-4248-a940-8e8312bb7ff0",
+      "name": "Recursive Character Text Splitter"
+    }
+  ],
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "bbfea198-bfee-4816-9af9-078b5756000d",
+  "owner": {
+    "type": "team",
+    "teamId": "CnpbdNslr56otFnl",
+    "teamName": "RAG DB"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

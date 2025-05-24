@@ -1,0 +1,13 @@
+{
+  "id": "WAhix2tqD6wDz5IV",
+  "name": "Airtable Personal Access Token account 2",
+  "type": "airtableTokenApi",
+  "data": {
+    "accessToken": ""
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "T6Im4HMHj8P4WdMl",
+    "teamName": "Репостер"
+  }
+}

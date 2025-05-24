@@ -1,0 +1,192 @@
+{
+  "id": "IJFbVxtQnUaOnjSR",
+  "name": "Index test",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cb7741f5-a792-4e28-8e34-665d0afff916",
+      "name": "When chat message received",
+      "webhookId": "1101228c-e28e-4867-a9d5-d50bfb3f70e8"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Ты помощник по документации.\nИспользуй только знания из standards.\nЕсли не знаешь ответ, пиши \"Я не знаю\"\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        260,
+        0
+      ],
+      "id": "b6918b4a-0477-45cc-826c-b1f2499c437f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        340,
+        220
+      ],
+      "id": "3eb695be-93a0-4798-b85b-3b00173dac63",
+      "name": "Redis Chat Memory",
+      "credentials": {
+        "redis": {
+          "id": "YF6dn12QHUj1YiBl",
+          "name": "Redis DBServer"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "standards",
+        "toolDescription": "ГОСТы на металлопрокат",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "alfa_mw_2",
+          "mode": "list",
+          "cachedResultName": "alfa_mw_2"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.1,
+      "position": [
+        520,
+        220
+      ],
+      "id": "4c92f449-a47a-4f53-bb3e-721077e81cdd",
+      "name": "Qdrant Vector Store",
+      "credentials": {
+        "qdrantApi": {
+          "id": "dpIZVJnc4qKMuSTF",
+          "name": "QdrantApi DBServer"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        120,
+        220
+      ],
+      "id": "a8236cc6-ce0d-47e4-b3cd-8e905ca19137",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ir6iXmxI7w0RrLLv",
+          "name": "OpenAi Sven account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        620,
+        440
+      ],
+      "id": "de639b51-3daa-4340-893e-15d718892da1",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "ir6iXmxI7w0RrLLv",
+          "name": "OpenAi Sven account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "7202b353-b8b8-4190-adfe-9de0aa134a92",
+  "owner": {
+    "type": "team",
+    "teamId": "CnpbdNslr56otFnl",
+    "teamName": "RAG DB"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

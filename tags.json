@@ -15,6 +15,10 @@
     {
       "id": "cUWS1rMl8ciZNGWB",
       "name": "test"
+    },
+    {
+      "id": "hpueHo0225SAWQvU",
+      "name": "telegram"
     }
   ],
   "mappings": [
@@ -25,6 +29,26 @@
     {
       "workflowId": "h4XEhTtpmKkEwEG5",
       "tagId": "ooP7qQaD0xZUSZKK"
+    },
+    {
+      "workflowId": "ZsK2tjJZ3yn6mENF",
+      "tagId": "hpueHo0225SAWQvU"
+    },
+    {
+      "workflowId": "MDqDvGWwsJAZt2uK",
+      "tagId": "hpueHo0225SAWQvU"
+    },
+    {
+      "workflowId": "Prw9WTtBr28yDkvq",
+      "tagId": "hpueHo0225SAWQvU"
+    },
+    {
+      "workflowId": "VGzowLepx4jdXbDF",
+      "tagId": "cUWS1rMl8ciZNGWB"
+    },
+    {
+      "workflowId": "chafz2GhIV0Ed99G",
+      "tagId": "hpueHo0225SAWQvU"
     }
   ]
 }

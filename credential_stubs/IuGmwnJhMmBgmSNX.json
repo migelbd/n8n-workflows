@@ -1,0 +1,12 @@
+{
+  "id": "IuGmwnJhMmBgmSNX",
+  "name": "Airtable Personal Access Token account",
+  "type": "airtableTokenApi",
+  "data": {
+    "accessToken": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "id": "NxFLFS3StCA7mAnx",
+  "name": "Получение ответов",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7c5ee14d-3c17-42d1-9dd8-870b06818fbf",
+      "name": "When chat message received",
+      "webhookId": "39ab71a1-9af0-4996-9590-0a433ac83995"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {
+          "temperature": 0.5
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        140,
+        220
+      ],
+      "id": "be3c2d69-11bd-4c85-aed6-1c60f5bdf394",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ir6iXmxI7w0RrLLv",
+          "name": "OpenAi Sven account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        520,
+        460
+      ],
+      "id": "a100f8e5-1076-474a-bce9-4435d3b53fc7",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "ir6iXmxI7w0RrLLv",
+          "name": "OpenAi Sven account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Ты помощник по знаниям.\n\nДля ответов на вопросы испольузуй doc_info"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        220,
+        0
+      ],
+      "id": "f8ecb0ab-b86f-4091-ba6c-eaa17ffe2582",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "doc_info",
+        "toolDescription": "Информация",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "test_docs",
+          "mode": "list",
+          "cachedResultName": "test_docs"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.1,
+      "position": [
+        500,
+        240
+      ],
+      "id": "2d6390d0-3c9a-4697-9405-cef46eba4164",
+      "name": "Qdrant Vector Store1",
+      "credentials": {
+        "qdrantApi": {
+          "id": "dpIZVJnc4qKMuSTF",
+          "name": "QdrantApi DBServer"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        320,
+        220
+      ],
+      "id": "014d0db4-db54-4aec-8c01-c49605947ceb",
+      "name": "Redis Chat Memory",
+      "credentials": {
+        "redis": {
+          "id": "YF6dn12QHUj1YiBl",
+          "name": "Redis DBServer"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "04bc9e94-b3ca-4866-b4bd-be5a94694786",
+  "owner": {
+    "type": "team",
+    "teamId": "CnpbdNslr56otFnl",
+    "teamName": "RAG DB"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

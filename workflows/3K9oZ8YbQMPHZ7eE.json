@@ -1,0 +1,151 @@
+{
+  "id": "3K9oZ8YbQMPHZ7eE",
+  "name": "My workflow 4",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -220,
+        0
+      ],
+      "id": "52ee4274-d124-4f57-925c-0b44f861ed4f",
+      "name": "Telegram Trigger",
+      "webhookId": "ae10ce13-971e-426d-adda-6e93e05cd4df",
+      "credentials": {
+        "telegramApi": {
+          "id": "uwhss8SznhgKZftq",
+          "name": "Telegram KsBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "=Привет {{ $json.message.chat.first_name }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        300,
+        -120
+      ],
+      "id": "51ed5438-de6d-436b-832e-9bc6637228ff",
+      "name": "Telegram",
+      "webhookId": "24d3ea21-c28d-4ab2-8c69-77ea20c8cfff",
+      "credentials": {
+        "telegramApi": {
+          "id": "uwhss8SznhgKZftq",
+          "name": "Telegram KsBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9aeac9fe-f15f-4db4-82bd-0fd5e1193450",
+              "leftValue": "={{ $json.message.text }}",
+              "rightValue": "/start",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        20,
+        -20
+      ],
+      "id": "d7965862-8546-4410-8331-233a8d9b95b7",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $('Telegram Trigger').item.json.message.text }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        300,
+        160
+      ],
+      "id": "fd3e7777-6dee-4ba2-a530-fdc10ba6574a",
+      "name": "Telegram1",
+      "webhookId": "9d584860-8145-4d2c-913a-2caf99948853",
+      "credentials": {
+        "telegramApi": {
+          "id": "uwhss8SznhgKZftq",
+          "name": "Telegram KsBot"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "9056bac7-c2a0-4dd8-9cd0-c496f463b039",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "o.kesterson@yandex.ru"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}
