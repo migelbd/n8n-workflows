@@ -79,30 +79,6 @@
     },
     {
       "parameters": {
-        "chatId": "={{ $('Подготовка данных').item.json.telegram_id }}",
-        "text": "={{ $('Code').item.json.text }}",
-        "additionalFields": {
-          "appendAttribution": false
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        1580,
-        -200
-      ],
-      "id": "6ecfa02b-8ae7-45a5-9b37-d7a4c9688267",
-      "name": "Публикация поста",
-      "webhookId": "53ef211d-6131-4b4c-95b7-9cea53781c6f",
-      "credentials": {
-        "telegramApi": {
-          "id": "YYMAkRIbVkykkcPp",
-          "name": "Telegram Reposter"
-        }
-      }
-    },
-    {
-      "parameters": {
         "base": {
           "__rl": true,
           "value": "appGMMnhh5yDRIvPv",
@@ -218,220 +194,6 @@
     },
     {
       "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $('Code').item.json.media_group_id }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "notEmpty",
-                      "singleValue": true
-                    },
-                    "id": "82a90727-75da-4812-8c9e-59a1c31147bb"
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Медиа Группа"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "e2e578b3-1ee2-4198-9913-55e1883d62ce",
-                    "leftValue": "={{ $('Code').item.json.photo }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "array",
-                      "operation": "notEmpty",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Фото"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "54317c44-ccf9-450d-82f1-afff15cc7749",
-                    "leftValue": "={{ $('Code').item.json.video }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "object",
-                      "operation": "exists",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Видео"
-            }
-          ]
-        },
-        "options": {
-          "fallbackOutput": "extra"
-        }
-      },
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        1140,
-        -521
-      ],
-      "id": "dec4d4f6-0f3b-4078-bcf3-f2c0926da449",
-      "name": "Switch"
-    },
-    {
-      "parameters": {
-        "operation": "sendMediaGroup",
-        "chatId": "={{ $('Подготовка данных').item.json.telegram_id }}",
-        "media": {
-          "media": [
-            {
-              "additionalFields": {}
-            }
-          ]
-        },
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        1360,
-        -800
-      ],
-      "id": "154b932e-8d45-4180-b20b-a490f51ec673",
-      "name": "Telegram",
-      "webhookId": "bd80311b-8d4e-4ad6-bd2a-10bebf2a6be0",
-      "credentials": {
-        "telegramApi": {
-          "id": "YYMAkRIbVkykkcPp",
-          "name": "Telegram Reposter"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        1800,
-        -210.5
-      ],
-      "id": "5206564f-35fa-41f1-a38c-8054592f1d50",
-      "name": "No Operation, do nothing1"
-    },
-    {
-      "parameters": {
-        "operation": "sendVideo",
-        "chatId": "={{ $('Подготовка данных').item.json.telegram_id }}",
-        "file": "={{ $('Code').item.json.video.file_id }}",
-        "additionalFields": {
-          "caption": "={{ $('Code').item.json.text }}"
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        1580,
-        -400
-      ],
-      "id": "16a82d22-fde3-45d3-8cab-953d0f8c4a07",
-      "name": "Отправка видео",
-      "webhookId": "7f6588bc-fe05-42a9-ba68-1227b4a1d0c7",
-      "credentials": {
-        "telegramApi": {
-          "id": "YYMAkRIbVkykkcPp",
-          "name": "Telegram Reposter"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "operation": "sendPhoto",
-        "chatId": "={{ $('Подготовка данных').item.json.telegram_id }}",
-        "file": "={{ $json.photo.file_id }}",
-        "additionalFields": {
-          "caption": "={{ $('Code').item.json.text }}"
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        1580,
-        -600
-      ],
-      "id": "9d70da1b-9975-4bc6-b202-849ac94898c6",
-      "name": "Отправка фото",
-      "webhookId": "e0d1f1d9-d013-4c6e-9dff-8074c3414a71",
-      "credentials": {
-        "telegramApi": {
-          "id": "YYMAkRIbVkykkcPp",
-          "name": "Telegram Reposter"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "content": "## Не готово",
-        "height": 260,
-        "width": 360
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        1020,
-        -880
-      ],
-      "typeVersion": 1,
-      "id": "46b1a829-797a-4047-8a33-7d62fe527f89",
-      "name": "Sticky Note"
-    },
-    {
-      "parameters": {
-        "jsCode": "const $photos = $('Code').first().json.photo;\n\n// Найти фото с максимальным height\nconst photoWithMaxHeight = $photos.reduce((max, photo) => \n  photo.height > (max?.height ?? -Infinity) ? photo : max\n, null);\n\nconst result = {\n  photo: photoWithMaxHeight\n};\nreturn result;"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1360,
-        -600
-      ],
-      "id": "8a7fdc6b-4619-47d0-a531-0767344918c1",
-      "name": "Отбор картинки"
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
@@ -462,8 +224,8 @@
               "value": "={{ $json.Name }}"
             },
             {
-              "key": "hubs",
-              "value": "={{ $json[\"Name (from Хаб)\"] }}"
+              "key": "telegram_id",
+              "value": "={{ $json.Notes }}"
             }
           ]
         }
@@ -476,6 +238,38 @@
       ],
       "id": "b80efd8c-a5bf-4a5d-8d19-296d47e9d4ec",
       "name": "Execution Data"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot167110295:AAE1uRWxGEV1SBI-kZAB3p4Sl7sbI-eKM50/forwardMessage",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "chat_id",
+              "value": "={{ $json.telegram_id }}"
+            },
+            {
+              "name": "from_chat_id",
+              "value": "={{ $('Сообщение').item.json.channel_post.chat.id }}"
+            },
+            {
+              "name": "message_id",
+              "value": "={{ $('Сообщение').item.json.channel_post.message_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1140,
+        -500
+      ],
+      "id": "48aa0788-32ec-4436-b04f-499f0dad3ee7",
+      "name": "HTTP Request"
     }
   ],
   "connections": {
@@ -506,17 +300,6 @@
         [
           {
             "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Публикация поста": {
-      "main": [
-        [
-          {
-            "node": "No Operation, do nothing1",
             "type": "main",
             "index": 0
           }
@@ -574,87 +357,11 @@
         ]
       ]
     },
-    "Switch": {
-      "main": [
-        [
-          {
-            "node": "Telegram",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Отбор картинки",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Отправка видео",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Публикация поста",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "No Operation, do nothing1": {
-      "main": [
-        [
-          {
-            "node": "Цикл по подключенным каналам",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Отправка видео": {
-      "main": [
-        [
-          {
-            "node": "No Operation, do nothing1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Отправка фото": {
-      "main": [
-        [
-          {
-            "node": "No Operation, do nothing1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Отбор картинки": {
-      "main": [
-        [
-          {
-            "node": "Отправка фото",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Подготовка данных": {
       "main": [
         [
           {
-            "node": "Switch",
+            "node": "HTTP Request",
             "type": "main",
             "index": 0
           }
@@ -671,13 +378,24 @@
           }
         ]
       ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Цикл по подключенным каналам",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "e6e99cb0-cabb-4eca-9f72-2b5c408dbd5f",
+  "versionId": "c3c32eb2-2d7e-44ee-af28-3e7f1491f9b2",
   "owner": {
     "type": "team",
     "teamId": "T6Im4HMHj8P4WdMl",
