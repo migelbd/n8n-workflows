@@ -743,7 +743,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2380,
+        2460,
         80
       ],
       "id": "71bf5ea5-195a-430c-a3d5-895581260f12",
@@ -1098,7 +1098,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        4540,
+        4760,
         480
       ],
       "id": "47b0f37b-1dd1-48d8-9392-6f942d106940",
@@ -1125,7 +1125,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        4740,
+        5180,
         -20
       ],
       "id": "d0831a9e-28ba-4a99-b4ed-df5cdcc81c18",
@@ -1169,8 +1169,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2840,
-        100
+        2860,
+        80
       ],
       "id": "570f024a-6251-44f3-9432-2032f04ac884",
       "name": "Проверка пути"
@@ -1304,11 +1304,11 @@
             },
             {
               "name": "caption",
-              "value": "={{ $('Опубликовано').item.json.content.caption }}\n\nАвтор: [@{{ $('Опубликовано').item.json.content.chat.username }}](tg://user?id={{ $('Опубликовано').item.json.content.chat.id }})\n"
+              "value": "={{ $('Опубликовано').item.json.content.caption }}\n\nАвтор: <a href=\"tg://user?id={{ $('Опубликовано').item.json.content.chat.id }}\">@{{ $('Опубликовано').item.json.content.chat.username }}</a>\n"
             },
             {
               "name": "parse_mode",
-              "value": "MarkdownV2"
+              "value": "HTML"
             }
           ]
         },
@@ -1317,7 +1317,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4080,
+        4520,
         200
       ],
       "id": "9ca0c397-6ec2-4cc6-890d-7d1ab705e631",
@@ -1450,7 +1450,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2580,
+        2660,
         80
       ],
       "id": "ae1fc8d5-1287-4931-aa0b-03ba88110eaf",
@@ -1659,39 +1659,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        0,
-        0
-      ],
-      "id": "7b986367-0d73-47ad-ab89-b8654216ba51",
-      "name": "Копировать сообщение в канал1"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "=https://api.telegram.org/bot{{ $('Определение пути').item.json.bot_token }}/copyMessage",
-        "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "chat_id",
-              "value": "={{ $('Определение пути').item.json.channel_id }}"
-            },
-            {
-              "name": "from_chat_id",
-              "value": "={{ $('Опубликовано').item.json.content.chat.id }}"
-            },
-            {
-              "name": "message_id",
-              "value": "={{ $('Опубликовано').item.json.content.message_id }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        4060,
+        4280,
         -140
       ],
       "id": "efb665d6-eea9-45a3-9313-77f38b9b6826",
@@ -1724,7 +1692,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3200,
+        3420,
         -40
       ],
       "id": "4e714f8a-8a6f-455a-94a4-62b91d67712e",
@@ -1758,7 +1726,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3500,
+        3720,
         20
       ],
       "id": "987cc1f5-640c-4d21-b2d9-f2f23715a175",
@@ -1767,15 +1735,15 @@
     {
       "parameters": {
         "chatId": "={{ $('Общие настройки').item.json.channel_id }}",
-        "text": "={{ $('Опубликовано').item.json.content.text }}\n\nАвтор: [@{{ $('Опубликовано').item.json.content.chat.username }}](tg://user?id={{ $('Опубликовано').item.json.content.chat.id }})\n",
+        "text": "={{ $('Опубликовано').item.json.content.text }}\n\nАвтор: <a href=\"tg://user?id={{ $('Опубликовано').item.json.content.chat.id }}\">@{{ $('Опубликовано').item.json.content.chat.username }}</a>\n\n",
         "additionalFields": {
-          "parse_mode": "MarkdownV2"
+          "parse_mode": "HTML"
         }
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        4060,
+        4320,
         40
       ],
       "id": "6ac60338-1154-4cd5-aa4f-0434bdeb61da",
@@ -2267,7 +2235,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "b80022c5-76ea-4a98-8f03-038cd300c893",
+  "versionId": "4753a7ac-2c13-4f58-a8c1-42a799cb42c5",
   "owner": {
     "type": "team",
     "teamId": "vc6apYnRRhgg1E0V",
