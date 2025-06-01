@@ -4,30 +4,6 @@
   "nodes": [
     {
       "parameters": {
-        "events": [
-          "updateNewMessage"
-        ],
-        "options": {
-          "ignoreGroups": false
-        }
-      },
-      "type": "@telepilotco/n8n-nodes-telepilot.telePilotTrigger",
-      "typeVersion": 1,
-      "position": [
-        -100,
-        -60
-      ],
-      "id": "68116dbe-be32-4168-af56-ccbf21953233",
-      "name": "TelePilot Trigger",
-      "credentials": {
-        "telePilotApi": {
-          "id": "j4Lk5FixEz26AaCU",
-          "name": "My TG"
-        }
-      }
-    },
-    {
-      "parameters": {
         "operation": "select",
         "schema": {
           "__rl": true,
@@ -59,8 +35,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1240,
-        -80
+        1280,
+        -200
       ],
       "id": "0ac0aaff-b888-45e9-89b9-9d7bed81a3e0",
       "name": "Postgres",
@@ -109,8 +85,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        120,
-        -60
+        180,
+        -200
       ],
       "id": "1d5348c6-511a-4260-a292-206424c62d5e",
       "name": "If"
@@ -153,8 +129,8 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.2,
       "position": [
-        560,
-        -60
+        620,
+        -200
       ],
       "id": "3bc45ff7-b1db-4280-85e5-2154fd2de9cf",
       "name": "Filter"
@@ -167,8 +143,8 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        340,
-        -60
+        400,
+        -200
       ],
       "id": "47157b14-36bf-4ddf-9752-f52bc07cbe42",
       "name": "Split Out"
@@ -202,8 +178,8 @@
       "type": "n8n-nodes-text-manipulation.textManipulation",
       "typeVersion": 1,
       "position": [
-        780,
-        -60
+        840,
+        -200
       ],
       "id": "0a9e49e9-ced9-4552-9534-395d06ed3586",
       "name": "TextManipulation"
@@ -238,59 +214,25 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1000,
-        -60
+        1060,
+        -200
       ],
       "id": "556ce9e6-4fb7-4b22-b201-de477d71f970",
       "name": "If1"
     },
     {
       "parameters": {
-        "operation": "sendChatAction",
-        "chat_id": "={{ $json.telegram_id }}"
-      },
-      "type": "@telepilotco/n8n-nodes-telepilot.telePilot",
-      "typeVersion": 1,
-      "position": [
-        1460,
-        -80
-      ],
-      "id": "c5132837-88f5-42a7-906f-f1ea8cc7a9d9",
-      "name": "Telegram CoPilot",
-      "credentials": {
-        "telePilotApi": {
-          "id": "j4Lk5FixEz26AaCU",
-          "name": "My TG"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "amount": 1
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        1680,
-        -80
-      ],
-      "id": "29fa7f97-fb08-42e3-aae3-61fd6aedcde2",
-      "name": "Wait",
-      "webhookId": "7cdc9a67-8963-4515-9369-d893b829cb18"
-    },
-    {
-      "parameters": {
         "resource": "message",
         "chat_id": "={{ $('Postgres').item.json.telegram_id }}",
-        "messageText": "=Извините. Я в отпуске до 2 июня \n\n! Автоматический ответ",
+        "messageText": "={{ $json.output }}\n\n💬 Автоматический ответ",
         "message_thread_id": 0,
         "reply_to_msg_id": "={{ $('TelePilot Trigger').item.json.message.id }}"
       },
       "type": "@telepilotco/n8n-nodes-telepilot.telePilot",
       "typeVersion": 1,
       "position": [
-        1900,
-        -80
+        2096,
+        -200
       ],
       "id": "0234afe4-00cb-44ed-bca0-bc98786ac4cc",
       "name": "Telegram CoPilot1",
@@ -300,20 +242,124 @@
           "name": "My TG"
         }
       }
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "telegram_id",
+              "value": "={{ $json.telegram_id }}"
+            },
+            {
+              "key": "name",
+              "value": "={{ $json.name }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        -200
+      ],
+      "id": "f47978a1-9d39-471f-9df5-8d1903995d8a",
+      "name": "Execution Data"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('TelePilot Trigger').item.json.message.content.text.text }}",
+        "options": {
+          "systemMessage": "=Ты помощник для личного чата.\nТебя зовут Михаил.\nСегодня: {{ DateTime.now().toLocal().toLocaleString() }}\n\nКогда кто то присылает сообщение, говори что находишься в отпуске с 26.05.2025 по 02.06.2025.\n\n## IMPORTANT \n\nЕсли скажут что с чем то есть проблемы или что то не сформировалось, не отправилось, зависло, ответь что с эти вопросом можно обратиться к @timbuhkto или @latyshok"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        1720,
+        -200
+      ],
+      "id": "e1df9ef9-4c9d-4dca-aaa0-3271f8472cd3",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1748,
+        20
+      ],
+      "id": "357b5e28-3fe5-4196-9348-545b29d9bed4",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "ir6iXmxI7w0RrLLv",
+          "name": "OpenAi Sven account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=chat{{ $('Postgres').item.json.telegram_id }}_1",
+        "sessionTTL": 86400,
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        1868,
+        20
+      ],
+      "id": "3d01e3cb-ed8a-4707-8864-08f4de664952",
+      "name": "Redis Chat Memory1",
+      "credentials": {
+        "redis": {
+          "id": "YF6dn12QHUj1YiBl",
+          "name": "Redis DBServer"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "events": [
+          "updateNewMessage"
+        ],
+        "options": {
+          "ignoreGroups": false
+        }
+      },
+      "type": "@telepilotco/n8n-nodes-telepilot.telePilotTrigger",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -200
+      ],
+      "id": "f7cdc4a3-70b7-4c96-8028-26fb36dcdd30",
+      "name": "TelePilot Trigger",
+      "credentials": {
+        "telePilotApi": {
+          "id": "j4Lk5FixEz26AaCU",
+          "name": "My TG"
+        }
+      }
     }
   ],
   "connections": {
-    "TelePilot Trigger": {
-      "main": [
-        [
-          {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "If": {
       "main": [
         [
@@ -373,29 +419,67 @@
       "main": [
         [
           {
-            "node": "Telegram CoPilot",
+            "node": "Execution Data",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Telegram CoPilot": {
+    "Telegram CoPilot1": {
+      "main": [
+        []
+      ]
+    },
+    "Execution Data": {
       "main": [
         [
           {
-            "node": "Wait",
+            "node": "AI Agent1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Wait": {
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
       "main": [
         [
           {
             "node": "Telegram CoPilot1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TelePilot Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -407,7 +491,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "78806074-7cf9-4e4f-a51a-d5dc540d53eb",
+  "versionId": "96a21b77-89e5-4f14-b973-ed18ab711116",
   "owner": {
     "type": "personal",
     "personalEmail": "mikhail@devilweb.ru"

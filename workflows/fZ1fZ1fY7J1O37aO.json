@@ -1,0 +1,245 @@
+{
+  "id": "fZ1fZ1fY7J1O37aO",
+  "name": "ЛС ассистент",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "*"
+        ],
+        "additionalFields": {
+          "download": true
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        -20
+      ],
+      "id": "eccd226c-8870-4b35-adfa-507e68cedb04",
+      "name": "Telegram Trigger",
+      "webhookId": "5d5db85f-36b0-4dff-9487-7659f973f731",
+      "credentials": {
+        "telegramApi": {
+          "id": "H4WzM8ZT7BZj8V0l",
+          "name": "Private Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.business_message.text }}",
+        "options": {
+          "systemMessage": "=Ты помощник для личного чата.\nМеня зовут Михаил.\nСегодня: {{ DateTime.now().toLocal().toLocaleString() }}\n\nТолько один раз скажи что я в оптуске с 26.05.2025 по 02.06.2025 или просто до 2 июня.\nЕсли скажут что с чем то есть проблемы или что то не сформировалось, не отправилось, зависло, ответь что с эти вопросом можно обратиться к @timbuhkto или @latyshok\n\n## IMPORTANT \nОтвечай от моего имени. Как бдуто ты это я.\nОтвечай в формате HTML для Telegram BOT Api, допустимо использовать тег <strong></strong> для жирного текста.\n\nНЕ ИСПОЛЬЗУЙ теги <p></p>\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        600,
+        -20
+      ],
+      "id": "36e70211-ed27-4bd1-932c-1c629c6778ed",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        480,
+        220
+      ],
+      "id": "efae6542-b658-4726-8eae-963024a96d4a",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ir6iXmxI7w0RrLLv",
+          "name": "OpenAi Sven account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=chat_{{ $('Telegram Trigger').item.json.business_message.chat.id }}_2",
+        "sessionTTL": 86400,
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        660,
+        220
+      ],
+      "id": "b6fcc897-2b14-48fa-b31b-18ec2052225e",
+      "name": "Redis Chat Memory",
+      "credentials": {
+        "redis": {
+          "id": "YF6dn12QHUj1YiBl",
+          "name": "Redis DBServer"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot7184448690:AAHY3twWYNcT4tRx0BABrqJeGnZKTocwjXc/sendMessage",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "business_connection_id",
+              "value": "={{ $('Telegram Trigger').item.json.business_message.business_connection_id }}"
+            },
+            {
+              "name": "chat_id",
+              "value": "={{ $('Telegram Trigger').item.json.business_message.chat.id }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.output }}\n\n<i>💬 Автоматический ответ</i>"
+            },
+            {
+              "name": "parse_mode",
+              "value": "html"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1040,
+        -20
+      ],
+      "id": "09ae6d5d-4bcf-45a6-ba15-d3975e716fa6",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "92ebd0b9-d862-404b-859c-9e5af3ab8bdf",
+              "leftValue": "={{ $json.business_message.business_connection_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "6c4c8c0d-15a4-47f7-a515-f5905e9f8881",
+              "leftValue": "={{ $json.business_message.text }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        220,
+        -20
+      ],
+      "id": "ba39f548-9e0b-4b82-b02f-a40745fb69bb",
+      "name": "If"
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "950eb2d5-3e06-4c3d-b65d-11b91c6d9008",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

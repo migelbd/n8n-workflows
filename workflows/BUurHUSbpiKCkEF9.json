@@ -9,23 +9,22 @@
           "callback_query"
         ],
         "additionalFields": {
-          "download": true,
-          "imageSize": "large"
+          "download": false
         }
       },
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -960,
-        -80
+        -1560,
+        -180
       ],
       "id": "bb741d92-e0d1-4aee-8be8-287cde54ae7a",
       "name": "Входящие сообщения",
       "webhookId": "1b60de32-6e89-4264-a3c6-73a6ecfecd98",
       "credentials": {
         "telegramApi": {
-          "id": "Q3tv0mWUEP3jFDY1",
-          "name": "Telegram TestBot"
+          "id": "j5VNNxtOXaox9FTb",
+          "name": "med_cats_pbot"
         }
       }
     },
@@ -86,15 +85,14 @@
           ]
         },
         "options": {
-          "fallbackOutput": "extra",
-          "renameFallbackOutput": "Неизвестно"
+          "fallbackOutput": "none"
         }
       },
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        440,
-        -100
+        220,
+        -220
       ],
       "id": "78c257c2-2682-48b4-aee2-a60539fab4f1",
       "name": "Определение пути",
@@ -206,8 +204,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -60,
-        -200
+        -640,
+        -380
       ],
       "id": "ae8aa061-4e7a-4587-827f-7e16eae4d56d",
       "name": "Сохранение в БД",
@@ -229,98 +227,20 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3380,
-        -340
+        3640,
+        -580
       ],
       "id": "65ca3dd1-76a2-4b43-be6e-f6e58ccbbc65",
       "name": "Приветствие",
       "webhookId": "79834107-d467-47a1-b699-76ee0c4d223d",
+      "notesInFlow": true,
       "credentials": {
         "telegramApi": {
-          "id": "Q3tv0mWUEP3jFDY1",
-          "name": "Telegram TestBot"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "e49b1374-d3cc-49c5-a02c-a02273107aaf",
-              "name": "admin_id",
-              "value": 177588546,
-              "type": "number"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1880,
-        -500
-      ],
-      "id": "61466501-6d84-4717-8f17-28fa0dc3fa72",
-      "name": "Настройки"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": false,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "cb77a882-eb04-4a84-acd6-a4110377536e",
-              "leftValue": "={{ $json.message.text }}",
-              "rightValue": "/start",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            },
-            {
-              "id": "3b72a585-f994-410f-95d6-7d26086d37e7",
-              "leftValue": "={{ $json.message.entities[0].type }}",
-              "rightValue": "bot_command",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {
-          "ignoreCase": true
+          "id": "j5VNNxtOXaox9FTb",
+          "name": "med_cats_pbot"
         }
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        2380,
-        -380
-      ],
-      "id": "f1132429-1884-4c2e-a204-c27d97cce334",
-      "name": "If"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        400,
-        160
-      ],
-      "id": "81429dd3-6018-4092-9c3b-32340ba0c96c",
-      "name": "No Operation, do nothing"
+      "notes": "Сообщение пользователю"
     },
     {
       "parameters": {
@@ -330,46 +250,11 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        220,
-        -100
+        -380,
+        -220
       ],
       "id": "88997e31-e2cb-47a4-9a9e-719e1afa1121",
       "name": "Merge1"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "5c83bfd1-5c88-4449-a106-5cdc9a492a8a",
-              "leftValue": "={{ $json.id }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "looseTypeValidation": true,
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        2960,
-        -180
-      ],
-      "id": "442950f7-f0d4-4ae6-b377-76e9d1b90ba9",
-      "name": "If1"
     },
     {
       "parameters": {
@@ -404,8 +289,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2640,
-        -200
+        1060,
+        -320
       ],
       "id": "f3765f63-c8e5-4ff3-b731-3a69de9de332",
       "name": "Поиск запросов",
@@ -435,7 +320,8 @@
           "value": {
             "from_user": "={{ $('Определение пути').item.json.message.from.id }}",
             "updated_at": "={{ DateTime.local() }}",
-            "content": "={{ $('Определение пути').item.json.message }}"
+            "content": "={{ $('Определение пути').item.json.message }}",
+            "fw_message_id": "={{ $json.result.message_id }}"
           },
           "matchingColumns": [
             "id"
@@ -497,6 +383,16 @@
               "display": true,
               "type": "dateTime",
               "canBeUsedToMatch": true
+            },
+            {
+              "id": "fw_message_id",
+              "displayName": "fw_message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
             }
           ],
           "attemptToConvertTypes": false,
@@ -507,8 +403,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1520,
-        -500
+        2180,
+        -220
       ],
       "id": "b7a904e1-1a2b-42f0-92b5-f92e6018e33d",
       "name": "Создание запроса",
@@ -530,18 +426,20 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3380,
-        -160
+        3640,
+        -340
       ],
       "id": "39837e66-659d-4105-a28e-cee3ca9e050a",
       "name": "Уже существует запрос",
       "webhookId": "21136daa-4246-4c18-93c2-a1d474687ccb",
+      "notesInFlow": true,
       "credentials": {
         "telegramApi": {
-          "id": "Q3tv0mWUEP3jFDY1",
-          "name": "Telegram TestBot"
+          "id": "j5VNNxtOXaox9FTb",
+          "name": "med_cats_pbot"
         }
-      }
+      },
+      "notes": "Сообщение пользователю"
     },
     {
       "parameters": {
@@ -554,23 +452,23 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1700,
-        -500
+        1600,
+        -220
       ],
       "id": "db47ade5-dcd3-4538-bca2-043f58bc39f5",
       "name": "Запрос на модерации",
       "webhookId": "3492f91d-3009-47a6-844f-3f975f194c01",
       "credentials": {
         "telegramApi": {
-          "id": "Q3tv0mWUEP3jFDY1",
-          "name": "Telegram TestBot"
+          "id": "j5VNNxtOXaox9FTb",
+          "name": "med_cats_pbot"
         }
       }
     },
     {
       "parameters": {
-        "chatId": "={{ $json.admin_id }}",
-        "text": "=Новое предложение!\n\n{{ $('Входящие сообщения').item.json.message.text }}\n\nОт {{ $('Входящие сообщения').item.json.message.from.first_name }}",
+        "chatId": "={{ $('Общие настройки').item.json.admin_chat_id }}",
+        "text": "=Новое предложение от {{ $('Входящие сообщения').item.json.message.from.first_name }}\n\nID {{ $('Входящие сообщения').item.json.message.from.id }}",
         "replyMarkup": "inlineKeyboard",
         "inlineKeyboard": {
           "rows": [
@@ -591,6 +489,18 @@
                   }
                 ]
               }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "АНОНИМНО",
+                    "additionalFields": {
+                      "callback_data": "=pub_anon_yes:{{ $('Создание запроса').item.json.id }}"
+                    }
+                  }
+                ]
+              }
             }
           ]
         },
@@ -601,18 +511,20 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2040,
-        -500
+        2440,
+        -220
       ],
       "id": "845c6422-01a0-41c5-84ff-8a0e42b598f7",
       "name": "Уведомление админа",
       "webhookId": "5565471d-47ca-4e91-b46f-4d59358d00bd",
+      "notesInFlow": false,
       "credentials": {
         "telegramApi": {
-          "id": "Q3tv0mWUEP3jFDY1",
-          "name": "Telegram TestBot"
+          "id": "j5VNNxtOXaox9FTb",
+          "name": "med_cats_pbot"
         }
-      }
+      },
+      "notes": "Сообщение админу"
     },
     {
       "parameters": {
@@ -621,8 +533,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -620,
-        -200
+        -1120,
+        -380
       ],
       "id": "d1940998-310e-4ec1-8941-afd409685448",
       "name": "Получение пользователя"
@@ -678,6 +590,30 @@
               },
               "renameOutput": true,
               "outputKey": "Отклонить"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "29e342d9-24d9-41b4-ae6e-8a0b4fa676aa",
+                    "leftValue": "={{ $json.callback_query.data }}",
+                    "rightValue": "pub_anon_yes",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Опубликовать анонимно"
             }
           ]
         },
@@ -688,8 +624,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        660,
-        300
+        620,
+        180
       ],
       "id": "58d77d6f-64af-4f31-9b43-1c81da0edf9c",
       "name": "Switch"
@@ -705,16 +641,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        880,
-        500
+        840,
+        380
       ],
       "id": "0708781c-4012-4ed1-8fe4-9b23b2e9be93",
       "name": "Telegram",
       "webhookId": "b1b1a39d-95d4-4981-9aec-95a5bee85f8a",
       "credentials": {
         "telegramApi": {
-          "id": "AG5ES0zHiTaIhFiO",
-          "name": "TravmeNET_bot"
+          "id": "j5VNNxtOXaox9FTb",
+          "name": "med_cats_pbot"
         }
       }
     },
@@ -747,8 +683,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1320,
-        200
+        1260,
+        80
       ],
       "id": "1a1306a4-6062-4de1-b849-9295837c11ed",
       "name": "Поиск запросов1",
@@ -778,6 +714,10 @@
                   {
                     "action": "replace",
                     "substring": "pub_yes:"
+                  },
+                  {
+                    "action": "replace",
+                    "substring": "pub_anon_yes:"
                   }
                 ]
               }
@@ -788,36 +728,11 @@
       "type": "n8n-nodes-text-manipulation.textManipulation",
       "typeVersion": 1,
       "position": [
-        880,
-        100
+        840,
+        -20
       ],
       "id": "0834afa8-3bee-4ac8-a109-0c385c3e8901",
       "name": "TextManipulation"
-    },
-    {
-      "parameters": {
-        "chatId": "={{ $json.admin_id }}",
-        "text": "={{ $('Опубликовано').item.json.content.text }}",
-        "additionalFields": {
-          "appendAttribution": false
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        3060,
-        80
-      ],
-      "id": "cb71856d-c672-47e1-b07f-0ee2edd9c411",
-      "name": "Публикация в канал",
-      "webhookId": "5565471d-47ca-4e91-b46f-4d59358d00bd",
-      "executeOnce": true,
-      "credentials": {
-        "telegramApi": {
-          "id": "Q3tv0mWUEP3jFDY1",
-          "name": "Telegram TestBot"
-        }
-      }
     },
     {
       "parameters": {
@@ -828,18 +743,19 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2420,
-        200
+        2380,
+        80
       ],
       "id": "71bf5ea5-195a-430c-a3d5-895581260f12",
       "name": "Удаление сообщения",
       "webhookId": "38e29812-a0a3-4366-9032-5585df456dab",
       "credentials": {
         "telegramApi": {
-          "id": "Q3tv0mWUEP3jFDY1",
-          "name": "Telegram TestBot"
+          "id": "j5VNNxtOXaox9FTb",
+          "name": "med_cats_pbot"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -852,16 +768,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2200,
-        200
+        2160,
+        80
       ],
       "id": "eb3f2692-7f9a-4f1e-be9d-3fb8e36ddc90",
       "name": "Ответ на кнопку",
       "webhookId": "b1b1a39d-95d4-4981-9aec-95a5bee85f8a",
       "credentials": {
         "telegramApi": {
-          "id": "Q3tv0mWUEP3jFDY1",
-          "name": "Telegram TestBot"
+          "id": "j5VNNxtOXaox9FTb",
+          "name": "med_cats_pbot"
         }
       }
     },
@@ -893,8 +809,8 @@
       "type": "n8n-nodes-text-manipulation.textManipulation",
       "typeVersion": 1,
       "position": [
-        880,
-        300
+        840,
+        180
       ],
       "id": "462bdd4c-358b-405f-86b8-ce7e0f577bcf",
       "name": "TextManipulation1"
@@ -917,17 +833,26 @@
                 "type": "string",
                 "operation": "startsWith"
               }
+            },
+            {
+              "id": "77075422-9b95-4d14-8f09-5ff10ac85352",
+              "leftValue": "={{ $('Merge2').item.json.callback_query.data }}",
+              "rightValue": "pub_anon_yes",
+              "operator": {
+                "type": "string",
+                "operation": "startsWith"
+              }
             }
           ],
-          "combinator": "and"
+          "combinator": "or"
         },
         "options": {}
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1540,
-        200
+        1500,
+        80
       ],
       "id": "bba7b7f7-5b9d-4ee5-96bc-952490745691",
       "name": "If2"
@@ -1024,8 +949,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1760,
-        100
+        1720,
+        -20
       ],
       "id": "c2272f91-d23b-42ec-89a9-1ba49a1127d9",
       "name": "Опубликовано",
@@ -1128,8 +1053,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1760,
-        300
+        1720,
+        180
       ],
       "id": "428b5b2c-d3b1-49c8-96f6-9a93d46a7f5b",
       "name": "Отклонено",
@@ -1145,8 +1070,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        1980,
-        200
+        1940,
+        80
       ],
       "id": "8a41c153-cfe3-459d-9bd4-b2deaf2d64a4",
       "name": "Merge"
@@ -1156,8 +1081,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        1100,
-        200
+        1060,
+        80
       ],
       "id": "ba4cb6f2-d96d-4e16-8b82-ef45a46c9dbc",
       "name": "Merge2"
@@ -1173,19 +1098,21 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3380,
-        200
+        4540,
+        480
       ],
       "id": "47b0f37b-1dd1-48d8-9392-6f942d106940",
       "name": "Отказ",
       "webhookId": "5565471d-47ca-4e91-b46f-4d59358d00bd",
       "executeOnce": true,
+      "notesInFlow": true,
       "credentials": {
         "telegramApi": {
-          "id": "Q3tv0mWUEP3jFDY1",
-          "name": "Telegram TestBot"
+          "id": "j5VNNxtOXaox9FTb",
+          "name": "med_cats_pbot"
         }
-      }
+      },
+      "notes": "Сообщение пользователю"
     },
     {
       "parameters": {
@@ -1198,34 +1125,21 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3380,
-        20
+        4740,
+        -20
       ],
       "id": "d0831a9e-28ba-4a99-b4ed-df5cdcc81c18",
       "name": "Успех",
       "webhookId": "5565471d-47ca-4e91-b46f-4d59358d00bd",
       "executeOnce": true,
+      "notesInFlow": true,
       "credentials": {
         "telegramApi": {
-          "id": "Q3tv0mWUEP3jFDY1",
-          "name": "Telegram TestBot"
+          "id": "j5VNNxtOXaox9FTb",
+          "name": "med_cats_pbot"
         }
-      }
-    },
-    {
-      "parameters": {
-        "content": "## Сообщения пользователю",
-        "height": 860,
-        "width": 300
       },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        3300,
-        -440
-      ],
-      "typeVersion": 1,
-      "id": "0de5fdfd-4b74-413b-b78e-9b10952fdad6",
-      "name": "Sticky Note"
+      "notes": "Сообщение пользователю"
     },
     {
       "parameters": {
@@ -1239,7 +1153,7 @@
           "conditions": [
             {
               "id": "0e469cb3-3651-4dfa-8c24-6423f7ca84d6",
-              "leftValue": "={{ $json.status }}",
+              "leftValue": "={{ $('Merge').item.json.status }}",
               "rightValue": "published",
               "operator": {
                 "type": "string",
@@ -1255,41 +1169,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2860,
-        200
+        2840,
+        100
       ],
       "id": "570f024a-6251-44f3-9432-2032f04ac884",
       "name": "Проверка пути"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "e49b1374-d3cc-49c5-a02c-a02273107aaf",
-              "name": "admin_id",
-              "value": 177588546,
-              "type": "number"
-            },
-            {
-              "id": "b37e1a45-30a8-4ea3-9acc-5500e53379bd",
-              "name": "status",
-              "value": "={{ $('Merge').item.json.status }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        2640,
-        200
-      ],
-      "id": "6d4ac1f3-3c54-4384-9a26-395ce49c251b",
-      "name": "Настройки канала",
-      "executeOnce": true
     },
     {
       "parameters": {
@@ -1313,11 +1197,596 @@
       "type": "n8n-nodes-base.executionData",
       "typeVersion": 1,
       "position": [
-        -360,
-        -200
+        -900,
+        -380
       ],
       "id": "d966ab05-971d-4b13-8adf-952c11003ae8",
       "name": "Execution Data"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cb77a882-eb04-4a84-acd6-a4110377536e",
+              "leftValue": "={{ $json.message.text }}",
+              "rightValue": "/",
+              "operator": {
+                "type": "string",
+                "operation": "startsWith"
+              }
+            },
+            {
+              "id": "3b72a585-f994-410f-95d6-7d26086d37e7",
+              "leftValue": "={{ $json.message.entities[0].type }}",
+              "rightValue": "bot_command",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        620,
+        -420
+      ],
+      "id": "f1132429-1884-4c2e-a204-c27d97cce334",
+      "name": "Проверка на команду"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5c83bfd1-5c88-4449-a106-5cdc9a492a8a",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1280,
+        -320
+      ],
+      "id": "442950f7-f0d4-4ae6-b377-76e9d1b90ba9",
+      "name": "Проверка существования запроса"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/bot{{ $('Определение пути').item.json.bot_token }}/copyMessage",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "chat_id",
+              "value": "={{ $('Определение пути').item.json.channel_id }}"
+            },
+            {
+              "name": "from_chat_id",
+              "value": "={{ $('Опубликовано').item.json.content.chat.id }}"
+            },
+            {
+              "name": "message_id",
+              "value": "={{ $('Опубликовано').item.json.content.message_id }}"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $('Опубликовано').item.json.content.caption }}\n\nАвтор: [@{{ $('Опубликовано').item.json.content.chat.username }}](tg://user?id={{ $('Опубликовано').item.json.content.chat.id }})\n"
+            },
+            {
+              "name": "parse_mode",
+              "value": "MarkdownV2"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4080,
+        200
+      ],
+      "id": "9ca0c397-6ec2-4cc6-890d-7d1ab705e631",
+      "name": "Копировать сообщение в канал"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "350603d0-1662-4c68-91c6-457322b6c649",
+              "name": "admin_chat_id",
+              "value": 1612202464,
+              "type": "number"
+            },
+            {
+              "id": "8ada7dfb-b984-4be2-8f6c-2b3a23beecc9",
+              "name": "channel_id",
+              "value": -1002483976885,
+              "type": "number"
+            },
+            {
+              "id": "073c860c-2b37-4bfe-bb50-e04d2347015b",
+              "name": "bot_token",
+              "value": "8003284507:AAFxpEDfK52gYgjmyGm6oyBhiWfxz3rehAw",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -80,
+        -220
+      ],
+      "id": "c1424c70-522c-4f45-996b-ef528e3e9c9b",
+      "name": "Общие настройки"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/bot{{ $('Определение пути').item.json.bot_token }}/forwardMessage",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "chat_id",
+              "value": "={{ $('Общие настройки').item.json.admin_chat_id }}"
+            },
+            {
+              "name": "from_chat_id",
+              "value": "={{ $('Общие настройки').item.json.message.chat.id }}"
+            },
+            {
+              "name": "message_id",
+              "value": "={{ $('Общие настройки').item.json.message.message_id }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1880,
+        -220
+      ],
+      "id": "00c7a8c1-4b37-47bd-93d1-4dc71b27354a",
+      "name": "Переслать админу"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d157c892-d427-4082-9691-871865696ee6",
+              "leftValue": "={{ $json.message.chat.type }}",
+              "rightValue": "private",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "44e91228-36be-4186-a47b-f7bf25875bc2",
+              "leftValue": "={{ $json.callback_query }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1320,
+        -180
+      ],
+      "id": "0b072778-7ec0-4f09-a3be-8f0e076e8a81",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "deleteMessage",
+        "chatId": "={{ $('Входящие сообщения').item.json.callback_query.message.chat.id }}",
+        "messageId": "={{ $('Поиск запросов1').item.json.fw_message_id }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2580,
+        80
+      ],
+      "id": "ae1fc8d5-1287-4931-aa0b-03ba88110eaf",
+      "name": "Удаление сообщения1",
+      "webhookId": "38e29812-a0a3-4366-9032-5585df456dab",
+      "credentials": {
+        "telegramApi": {
+          "id": "j5VNNxtOXaox9FTb",
+          "name": "med_cats_pbot"
+        }
+      },
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/start",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    },
+                    "id": "51e33a08-2eff-4b78-86be-a5e74bf82d00"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Start"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2c2d2bf3-c3e2-42c5-b8de-c2b42f1cc200",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/update",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Update Pin"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1060,
+        -660
+      ],
+      "id": "216f4154-8682-46f7-b43a-c7a40737d837",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1035216d-4587-4ba1-a340-e73dd970c2db",
+              "leftValue": "={{ $('Проверка на команду').item.json.admin_chat_id }}",
+              "rightValue": "={{ $('Проверка на команду').item.json.message.from.id }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1340,
+        -520
+      ],
+      "id": "fe7cad8d-3a62-44df-bfba-5abd5ffe6442",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "pinChatMessage",
+        "chatId": "={{ $json.result.sender_chat.id }}",
+        "messageId": "={{ $json.result.message_id }}",
+        "additionalFields": {
+          "disable_notification": true
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1900,
+        -540
+      ],
+      "id": "95cdaaa4-42cb-4eab-8425-f6fc22313b7c",
+      "name": "Закрепить сообщение",
+      "webhookId": "02db3185-dfbc-409c-a254-3eb5ab80c1fc",
+      "credentials": {
+        "telegramApi": {
+          "id": "j5VNNxtOXaox9FTb",
+          "name": "med_cats_pbot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Общие настройки').item.json.channel_id }}",
+        "text": "Хочешь предложить пост? Тогда жми кнопку!",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "Предложить",
+                    "additionalFields": {
+                      "url": "https://t.me/med_cats_pbot?start=from_pin"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_notification": true
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1660,
+        -560
+      ],
+      "id": "02213ffe-e357-4e6a-bfc3-90d566252680",
+      "name": "Обновить сообщение предложки",
+      "webhookId": "2ed32433-1649-4552-870d-1893158e5fb5",
+      "credentials": {
+        "telegramApi": {
+          "id": "j5VNNxtOXaox9FTb",
+          "name": "med_cats_pbot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/bot{{ $('Определение пути').item.json.bot_token }}/copyMessage",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "chat_id",
+              "value": "={{ $('Определение пути').item.json.channel_id }}"
+            },
+            {
+              "name": "from_chat_id",
+              "value": "={{ $('Опубликовано').item.json.content.chat.id }}"
+            },
+            {
+              "name": "message_id",
+              "value": "={{ $('Опубликовано').item.json.content.message_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7b986367-0d73-47ad-ab89-b8654216ba51",
+      "name": "Копировать сообщение в канал1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/bot{{ $('Определение пути').item.json.bot_token }}/copyMessage",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "chat_id",
+              "value": "={{ $('Определение пути').item.json.channel_id }}"
+            },
+            {
+              "name": "from_chat_id",
+              "value": "={{ $('Опубликовано').item.json.content.chat.id }}"
+            },
+            {
+              "name": "message_id",
+              "value": "={{ $('Опубликовано').item.json.content.message_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4060,
+        -140
+      ],
+      "id": "efb665d6-eea9-45a3-9313-77f38b9b6826",
+      "name": "Копировать сообщение в канал ANON"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2b7d9f37-6a49-476b-ac27-c42418292327",
+              "leftValue": "={{ $('Switch').item.json.callback_query.data }}",
+              "rightValue": "pub_anon_yes",
+              "operator": {
+                "type": "string",
+                "operation": "startsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3200,
+        -40
+      ],
+      "id": "4e714f8a-8a6f-455a-94a4-62b91d67712e",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cbaf19d9-858a-4817-97b9-05aec9dafcbb",
+              "leftValue": "={{ $('Опубликовано').item.json.content.text }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3500,
+        20
+      ],
+      "id": "987cc1f5-640c-4d21-b2d9-f2f23715a175",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Общие настройки').item.json.channel_id }}",
+        "text": "={{ $('Опубликовано').item.json.content.text }}\n\nАвтор: [@{{ $('Опубликовано').item.json.content.chat.username }}](tg://user?id={{ $('Опубликовано').item.json.content.chat.id }})\n",
+        "additionalFields": {
+          "parse_mode": "MarkdownV2"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        4060,
+        40
+      ],
+      "id": "6ac60338-1154-4cd5-aa4f-0434bdeb61da",
+      "name": "Telegram1",
+      "webhookId": "c0b02b4e-9fbd-4a19-9469-82d0225e641b",
+      "credentials": {
+        "telegramApi": {
+          "id": "j5VNNxtOXaox9FTb",
+          "name": "med_cats_pbot"
+        }
+      }
     }
   ],
   "connections": {
@@ -1325,12 +1794,7 @@
       "main": [
         [
           {
-            "node": "Merge1",
-            "type": "main",
-            "index": 1
-          },
-          {
-            "node": "Получение пользователя",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -1341,7 +1805,7 @@
       "main": [
         [
           {
-            "node": "If",
+            "node": "Проверка на команду",
             "type": "main",
             "index": 0
           }
@@ -1349,13 +1813,6 @@
         [
           {
             "node": "Switch",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing",
             "type": "main",
             "index": 0
           }
@@ -1373,58 +1830,11 @@
         ]
       ]
     },
-    "Настройки": {
-      "main": [
-        [
-          {
-            "node": "Уведомление админа",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "Приветствие",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Поиск запросов",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Merge1": {
       "main": [
         [
           {
-            "node": "Определение пути",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If1": {
-      "main": [
-        [
-          {
-            "node": "Уже существует запрос",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Создание запроса",
+            "node": "Общие настройки",
             "type": "main",
             "index": 0
           }
@@ -1435,7 +1845,7 @@
       "main": [
         [
           {
-            "node": "If1",
+            "node": "Проверка существования запроса",
             "type": "main",
             "index": 0
           }
@@ -1446,7 +1856,7 @@
       "main": [
         [
           {
-            "node": "Запрос на модерации",
+            "node": "Уведомление админа",
             "type": "main",
             "index": 0
           }
@@ -1457,7 +1867,7 @@
       "main": [
         [
           {
-            "node": "Настройки",
+            "node": "Переслать админу",
             "type": "main",
             "index": 0
           }
@@ -1487,6 +1897,13 @@
         [
           {
             "node": "TextManipulation1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "TextManipulation",
             "type": "main",
             "index": 0
           }
@@ -1526,7 +1943,7 @@
       "main": [
         [
           {
-            "node": "Настройки канала",
+            "node": "Удаление сообщения1",
             "type": "main",
             "index": 0
           }
@@ -1617,22 +2034,11 @@
         ]
       ]
     },
-    "Публикация в канал": {
-      "main": [
-        [
-          {
-            "node": "Успех",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Проверка пути": {
       "main": [
         [
           {
-            "node": "Публикация в канал",
+            "node": "If3",
             "type": "main",
             "index": 0
           }
@@ -1640,17 +2046,6 @@
         [
           {
             "node": "Отказ",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Настройки канала": {
-      "main": [
-        [
-          {
-            "node": "Проверка пути",
             "type": "main",
             "index": 0
           }
@@ -1667,17 +2062,217 @@
           }
         ]
       ]
+    },
+    "Проверка на команду": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Поиск запросов",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Проверка существования запроса": {
+      "main": [
+        [
+          {
+            "node": "Уже существует запрос",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Запрос на модерации",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Копировать сообщение в канал": {
+      "main": [
+        [
+          {
+            "node": "Успех",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Общие настройки": {
+      "main": [
+        [
+          {
+            "node": "Определение пути",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Переслать админу": {
+      "main": [
+        [
+          {
+            "node": "Создание запроса",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Уведомление админа": {
+      "main": [
+        []
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Получение пользователя",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Удаление сообщения1": {
+      "main": [
+        [
+          {
+            "node": "Проверка пути",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Приветствие",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Обновить сообщение предложки",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Обновить сообщение предложки": {
+      "main": [
+        [
+          {
+            "node": "Закрепить сообщение",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Копировать сообщение в канал ANON": {
+      "main": [
+        [
+          {
+            "node": "Успех",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Копировать сообщение в канал ANON",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Копировать сообщение в канал",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram1": {
+      "main": [
+        [
+          {
+            "node": "Успех",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "dd7377a0-d6a6-49ef-af2e-62b605a967bb",
+  "versionId": "b80022c5-76ea-4a98-8f03-038cd300c893",
   "owner": {
     "type": "team",
     "teamId": "vc6apYnRRhgg1E0V",
     "teamName": "Doza"
   },
-  "parentFolderId": null
+  "parentFolderId": null,
+  "isArchived": false
 }

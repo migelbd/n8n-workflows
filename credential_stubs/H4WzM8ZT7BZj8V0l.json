@@ -1,0 +1,12 @@
+{
+  "id": "H4WzM8ZT7BZj8V0l",
+  "name": "Private Assistant",
+  "type": "telegramApi",
+  "data": {
+    "accessToken": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  }
+}
