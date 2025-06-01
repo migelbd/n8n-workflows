@@ -1,0 +1,182 @@
+{
+  "id": "5b9LccDk3aFw0iNY",
+  "name": "Export to Excel",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "29e6831a-99b3-4577-ab2e-4098a37d83b4",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "requests",
+          "mode": "list",
+          "cachedResultName": "requests"
+        },
+        "returnAll": true,
+        "sort": {
+          "values": [
+            {
+              "column": "created_at"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        220,
+        0
+      ],
+      "id": "5ba74da8-68fb-47fc-8360-ea2b23c48849",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "ykVej8v41Gk8hjgU",
+          "name": "Postgres PBOT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "xlsx",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        760,
+        0
+      ],
+      "id": "d8eee16c-45d6-4b10-b8ec-b5324bbf9f33",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "99b4ce41-23e0-449d-b7d7-97df12f3be80",
+              "name": "from_user",
+              "value": "={{ $json.from_user }}",
+              "type": "string"
+            },
+            {
+              "id": "e1ce3097-cb9d-4c59-8c45-581d54f4f23d",
+              "name": "created_at",
+              "value": "={{ $json.created_at }}",
+              "type": "string"
+            },
+            {
+              "id": "15b1c92d-0355-4124-8c75-87ad98938e08",
+              "name": "username",
+              "value": "={{ $json.content.from.username }}",
+              "type": "string"
+            },
+            {
+              "id": "4b5924ad-ccdf-4d34-ac76-19effc4d423a",
+              "name": "first_name",
+              "value": "={{ $json.content.from.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "22269be6-7135-49b4-8236-cd9f8936f2e3",
+              "name": "last_name",
+              "value": "={{ $if($json.content.from.last_name, $json.content.from.last_name, '-') }}",
+              "type": "string"
+            },
+            {
+              "id": "d1b295d2-e35c-48ac-b9e5-ab9ff9ff15fd",
+              "name": "text",
+              "value": "={{ $ifEmpty($if($json.content.text, $json.content.text, $json.content.caption), '-') }}",
+              "type": "string"
+            },
+            {
+              "id": "d736d840-6573-4039-8a68-36df194d8b6e",
+              "name": "is_media",
+              "value": "={{ $if($json.content.photo, true, false) }}",
+              "type": "boolean"
+            },
+            {
+              "id": "2c011d44-09c7-44b7-a6ac-6525d4c406ca",
+              "name": "status",
+              "value": "={{ $json.status }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        440,
+        0
+      ],
+      "id": "b71cf618-73fa-4ca6-b99c-63ca8a68d1fa",
+      "name": "Edit Fields"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "e31d7f33-0389-46d0-bfe4-2e0c811ca34c",
+  "owner": {
+    "type": "team",
+    "teamId": "vc6apYnRRhgg1E0V",
+    "teamName": "Doza"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}
