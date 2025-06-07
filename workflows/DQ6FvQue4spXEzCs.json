@@ -1,0 +1,257 @@
+{
+  "id": "DQ6FvQue4spXEzCs",
+  "name": "FactBot",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id, fact FROM fact WHERE pub = false ORDER BY RANDOM() LIMIT 1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        220,
+        0
+      ],
+      "id": "b6e35719-e538-4d44-bea6-9e68d024217a",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "ykVej8v41Gk8hjgU",
+          "name": "Postgres PBOT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.fact }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Ты помощник по фактам. Можешь немного переписать факт(формат) но не меняй суть.\n\nТак же можешь добавить долю шутки или иронии."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        0
+      ],
+      "id": "cf59fd53-0751-446e-91ae-7fea8ef4b1a2",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        440,
+        220
+      ],
+      "id": "a8e7a6f0-8f50-4d88-b22f-17490605a6ca",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ir6iXmxI7w0RrLLv",
+          "name": "OpenAi Sven account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "fact",
+          "mode": "list",
+          "cachedResultName": "fact"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "pub": true,
+            "id": "={{ $('Postgres').item.json.id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "fact",
+              "displayName": "fact",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "pub",
+              "displayName": "pub",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        800,
+        0
+      ],
+      "id": "00408c12-9dab-4b00-8d4c-ae257febc298",
+      "name": "Postgres1",
+      "credentials": {
+        "postgres": {
+          "id": "ykVej8v41Gk8hjgU",
+          "name": "Postgres PBOT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "randomfact",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0e00d115-1967-493e-ae00-eeb5f26091de",
+      "name": "Webhook",
+      "webhookId": "24904ede-8175-4e73-999e-6f08eaa3d422"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=<!DOCTYPE html>\n<html lang=\"ru\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Факт</title>\n</head>\n<body>\n    <div>\n        <strong>Оригинальный факт:</strong>\n        <div>\n            {{ $('Postgres').item.json.fact }}\n        </div>\n    </div>\n    <div style=\"margin-top: 1em;\">\n        <strong>Отредактированный:</strong>\n        <div>\n            {{ $('Basic LLM Chain').item.json.text }}\n        </div>\n    </div>\n</body>\n</html>",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/html"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.2,
+      "position": [
+        1120,
+        0
+      ],
+      "id": "d67c2113-9e0e-4f39-a00b-4c3d32cc527a",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "connections": {
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "14f39bef-8338-4e2b-8307-8935f587875c",
+  "owner": {
+    "type": "team",
+    "teamId": "vc6apYnRRhgg1E0V",
+    "teamName": "Doza"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

@@ -1,0 +1,17 @@
+{
+  "id": "ABRZmyMkoxC9dgay",
+  "name": "FactPoster",
+  "nodes": [],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "d22e8504-dc47-4942-af20-72212cde2b63",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

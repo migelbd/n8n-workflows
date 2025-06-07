@@ -1,0 +1,390 @@
+{
+  "id": "K9v1L7FUYpEl5cdw",
+  "name": "My workflow 7",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "channel_post"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -80,
+        -20
+      ],
+      "id": "752a4990-4357-486e-9598-bd9181cd9338",
+      "name": "Telegram Trigger",
+      "webhookId": "d3873388-0a63-4263-8744-1d7d3745e5a4",
+      "credentials": {
+        "telegramApi": {
+          "id": "Q3tv0mWUEP3jFDY1",
+          "name": "Telegram TestBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f4c0b14a-dfae-4576-8f32-56f34ecb8c20",
+              "leftValue": "={{ $json.text }}",
+              "rightValue": "!edit",
+              "operator": {
+                "type": "string",
+                "operation": "endsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        420,
+        -20
+      ],
+      "id": "8725631e-fae6-422d-9661-8dd16288149f",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "\n\nreturn {\n  text: $input.first().json.channel_post.caption || $input.first().json.channel_post.text\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        140,
+        -20
+      ],
+      "id": "9a5e1461-21ca-4a9f-8c40-234cb561d074",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "editMessageText",
+        "chatId": "={{ $('Telegram Trigger').item.json.channel_post.chat.id }}",
+        "messageId": "={{ $('Telegram Trigger').item.json.channel_post.message_id }}",
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1940,
+        60
+      ],
+      "id": "91f4701b-f1dc-40dd-8096-adb4181c5078",
+      "name": "Telegram",
+      "webhookId": "504e7db1-4287-4290-b9ed-d3707b787dd5",
+      "credentials": {
+        "telegramApi": {
+          "id": "Q3tv0mWUEP3jFDY1",
+          "name": "Telegram TestBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "textsWithManipulations": {
+          "textsWithManipulationsValues": [
+            {
+              "dataSources": {
+                "dataSource": [
+                  {
+                    "text": "={{ $json.text }}",
+                    "destinationKey": "text"
+                  }
+                ]
+              },
+              "manipulations": {
+                "manipulation": [
+                  {
+                    "action": "replace",
+                    "substring": "!edit"
+                  },
+                  {
+                    "action": "trim",
+                    "trim": "trimEnd"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-text-manipulation.textManipulation",
+      "typeVersion": 1,
+      "position": [
+        600,
+        -140
+      ],
+      "id": "092ca20a-c502-40db-a59e-ba264930cc5e",
+      "name": "TextManipulation"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "bdffc33e-8238-4029-8165-c2e4809b167b",
+              "leftValue": "={{ $('Telegram Trigger').item.json.channel_post.caption }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1560,
+        -160
+      ],
+      "id": "237eada2-c2e5-4d89-a51c-e36f642d9c2e",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot281853057:AAFEO68Yo1B8z1MleNaG6KYHwfdlIdzfGpA/editMessageCaption",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "chat_id",
+              "value": "={{ $('Telegram Trigger').item.json.channel_post.chat.id }}"
+            },
+            {
+              "name": "message_id",
+              "value": "={{ $('Telegram Trigger').item.json.channel_post.message_id }}"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $('Basic LLM Chain').item.json.text }}"
+            },
+            {
+              "name": "parse_mode",
+              "value": "HTML"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1920,
+        -240
+      ],
+      "id": "3e6872b8-f68c-46d0-8585-c0ef6fde6bac",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('TextManipulation').item.json.text }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Ты ассистент  для форматирования текста постов в Telegram.\n\n### IMPORTANT\nИспользуй для форматирования следующие правила\n1-{{ $if($json.is_text, 4096, 1024) }} characters after entities parsing\n\n<b>bold</b>, <strong>bold</strong>\n<i>italic</i>, <em>italic</em>\n<u>underline</u>, <ins>underline</ins>\n<s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>\n<span class=\"tg-spoiler\">spoiler</span>, <tg-spoiler>spoiler</tg-spoiler>\n<b>bold <i>italic bold <s>italic bold strikethrough <span class=\"tg-spoiler\">italic bold strikethrough spoiler</span></s> <u>underline italic bold</u></i> bold</b>\n<a href=\"http://www.example.com/\">inline URL</a>\n<a href=\"tg://user?id=123456789\">inline mention of a user</a>\n<tg-emoji emoji-id=\"5368324170671202286\">👍</tg-emoji>\n<code>inline fixed-width code</code>\n<pre>pre-formatted fixed-width code block</pre>\n<pre><code class=\"language-python\">pre-formatted fixed-width code block written in the Python programming language</code></pre>\n<blockquote>Block quotation started\\nBlock quotation continued\\nThe last line of the block quotation</blockquote>\n<blockquote expandable>Expandable block quotation started\\nExpandable block quotation continued\\nExpandable block quotation continued\\nHidden by default part of the block quotation started\\nExpandable block quotation continued\\nThe last line of the block quotation</blockquote>\n\nOnly the tags mentioned above are currently supported.\nAll <, > and & symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (< with &lt;, > with &gt; and & with &amp;).\nAll numerical HTML entities are supported.\nThe API currently supports only the following named HTML entities: &lt;, &gt;, &amp; and &quot;.\nUse nested pre and code tags, to define programming language for pre entity.\nProgramming language can't be specified for standalone code tags."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        1180,
+        -140
+      ],
+      "id": "8639ecc0-f99d-4592-b3a8-b02be779f9bf",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1180,
+        60
+      ],
+      "id": "f6a8161b-5b8e-4407-9eb4-3962402fabac",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ir6iXmxI7w0RrLLv",
+          "name": "OpenAi Sven account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "27cfdb32-0f33-4890-a41d-19dd27dcc3a7",
+              "name": "=is_text",
+              "value": "={{ $if($('Telegram Trigger').item.json.channel_post.text, true, false) }}",
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        900,
+        -140
+      ],
+      "id": "1c54744e-1d68-4f9c-93b8-c065261507f4",
+      "name": "Edit Fields"
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "TextManipulation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TextManipulation": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "5e4492f3-d4d4-4e92-a9f3-4ef97b597174",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "mikhail@devilweb.ru"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

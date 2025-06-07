@@ -1737,6 +1737,7 @@
         "chatId": "={{ $('Общие настройки').item.json.channel_id }}",
         "text": "={{ $('Опубликовано').item.json.content.text }}\n\nАвтор: <a href=\"tg://user?id={{ $('Опубликовано').item.json.content.chat.id }}\">@{{ $('Опубликовано').item.json.content.chat.username }}</a>\n\n",
         "additionalFields": {
+          "appendAttribution": false,
           "parse_mode": "HTML"
         }
       },
@@ -2235,7 +2236,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "4753a7ac-2c13-4f58-a8c1-42a799cb42c5",
+  "versionId": "565b8888-895a-4dd5-9f06-0a0d0c940d09",
   "owner": {
     "type": "team",
     "teamId": "vc6apYnRRhgg1E0V",
